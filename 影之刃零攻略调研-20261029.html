@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>影之刃零 · 武典 — 深度调研攻略（2026-10-29 晚间版）</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&family=Ma+Shan+Zheng&display=swap');
+  :root {
+    --ink: #16130f; --paper: #ece5d3; --paper-dim: #ddd4bd;
+    --black: #211c14; --vermilion: #a5342b; --gold: #8a6d3b; --jade: #4a6b57;
+    --line: rgba(33,28,20,.25);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ink);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(165,52,43,.18), transparent),
+      radial-gradient(ellipse 60% 40% at 90% 110%, rgba(74,107,87,.12), transparent);
+    color: var(--paper);
+    font-family: "Noto Serif SC", "Songti SC", serif;
+    line-height: 1.9; letter-spacing: .04em;
+    max-width: 960px; margin: 0 auto; padding: 0 24px 90px;
+  }
+  /* ===== 卷首 ===== */
+  .cover { text-align: center; padding: 90px 0 50px; position: relative; }
+  .cover .seal {
+    display: inline-block; font-family: "Ma Shan Zheng", cursive;
+    font-size: 4.2rem; line-height: 1.15; color: var(--paper);
+    border: 3px double var(--vermilion); padding: 22px 34px;
+    letter-spacing: .35em; text-indent: .35em;
+    box-shadow: 0 0 0 1px rgba(165,52,43,.4), inset 0 0 60px rgba(165,52,43,.08);
+    background: radial-gradient(ellipse at center, rgba(165,52,43,.12), transparent 70%);
+  }
+  .cover .sub { margin-top: 22px; color: rgba(236,229,211,.55); font-size: .95rem; letter-spacing: .3em; }
+  .cover .meta { margin-top: 10px; color: rgba(236,229,211,.4); font-size: .8rem; letter-spacing: .1em; }
+  .divider { display: flex; align-items: center; gap: 14px; margin: 26px auto; max-width: 420px; color: var(--gold); }
+  .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+  /* ===== 卷轴章节 ===== */
+  section { margin: 56px 0; }
+  h2 {
+    font-family: "Ma Shan Zheng", cursive; font-weight: 400;
+    font-size: 2rem; color: var(--paper); letter-spacing: .2em;
+    display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px;
+  }
+  h2 .num { font-family: "Noto Serif SC"; font-size: .85rem; color: var(--vermilion); letter-spacing: .2em; }
+  h2::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--line), transparent); }
+  h3 { font-size: 1.08rem; color: var(--gold); margin: 26px 0 10px; letter-spacing: .12em; }
+  h3::before { content: "◆ "; color: var(--vermilion); font-size: .7em; vertical-align: 2px; }
+  h4 { font-size: .98rem; color: var(--jade); margin: 16px 0 6px; letter-spacing: .08em; }
+  p { margin: 10px 0; font-size: .96rem; color: rgba(236,229,211,.88); }
+  li { font-size: .94rem; color: rgba(236,229,211,.85); margin: 4px 0; }
+  ul, ol { padding-left: 24px; margin: 8px 0; }
+  strong { color: var(--paper); }
+  .gold { color: #c9a45c; font-weight: 600; }
+  .red { color: #d4635a; font-weight: 600; }
+  .jade { color: #7fae92; }
+
+  /* 卡片 */
+  .card {
+    background: linear-gradient(180deg, rgba(236,229,211,.05), rgba(236,229,211,.02));
+    border: 1px solid var(--line); border-radius: 4px;
+    padding: 18px 22px; margin: 16px 0; position: relative;
+  }
+  .card::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3px; background: var(--vermilion); opacity: .7; }
+  .card.jade::before { background: var(--jade); }
+  .card.gold::before { background: var(--gold); }
+
+  /* 表格 */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .88rem; }
+  th { background: rgba(236,229,211,.08); color: var(--gold); font-weight: 600; letter-spacing: .1em; padding: 10px 12px; border: 1px solid var(--line); text-align: left; }
+  td { padding: 10px 12px; border: 1px solid var(--line); vertical-align: top; color: rgba(236,229,211,.82); background: rgba(0,0,0,.15); }
+  tr:hover td { background: rgba(236,229,211,.04); }
+
+  /* 信号灯 */
+  .signal { display: inline-block; min-width: 2.4em; text-align: center; font-weight: 700; font-size: .8rem; padding: 1px 10px; border-radius: 2px; letter-spacing: .1em; }
+  .sig-blue { color: #0e0c08; background: #7da7d8; box-shadow: 0 0 10px rgba(125,167,216,.6); }
+  .sig-red { color: #0e0c08; background: #d8635a; box-shadow: 0 0 10px rgba(216,99,90,.6); }
+  .sig-black { color: #e8e4da; background: #2a2a2e; border: 1px solid #555; }
+
+  /* 卷目录 */
+  nav.toc { columns: 2; gap: 40px; margin: 20px 0; }
+  nav.toc a { display: block; color: rgba(236,229,211,.7); text-decoration: none; font-size: .95rem; padding: 5px 0; border-bottom: 1px dotted rgba(236,229,211,.15); }
+  nav.toc a:hover { color: var(--vermilion); }
+  nav.toc a::before { content: "· "; color: var(--gold); }
+
+  /* 编号诀要 */
+  ol.jue { list-style: none; counter-reset: j; padding: 0; }
+  ol.jue li { counter-increment: j; position: relative; padding: 10px 0 10px 46px; border-bottom: 1px dashed rgba(236,229,211,.12); }
+  ol.jue li::before {
+    content: counter(j, cjk-ideographic); position: absolute; left: 0; top: 12px;
+    width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+    font-family: "Ma Shan Zheng", cursive; font-size: 1rem; color: var(--vermilion);
+    border: 1px solid rgba(165,52,43,.5); border-radius: 2px; background: rgba(165,52,43,.07);
+  }
+
+  /* 舆图流 */
+  .mapflow { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 18px 0; }
+  .region {
+    border: 1px solid var(--line); border-radius: 4px; padding: 14px 18px;
+    background: linear-gradient(180deg, rgba(236,229,211,.04), transparent);
+    position: relative; overflow: hidden;
+  }
+  .region::before {
+    content: attr(data-idx); position: absolute; right: 10px; top: 6px;
+    font-family: "Ma Shan Zheng", cursive; font-size: 2.6rem; color: rgba(165,52,43,.13);
+  }
+  .region h4 { margin: 0 0 6px; color: var(--gold); font-size: 1.05rem; }
+  .region .en { color: rgba(236,229,211,.45); font-size: .78rem; letter-spacing: .12em; }
+  .region .q { font-size: .82rem; color: rgba(236,229,211,.66); margin-top: 4px; }
+  .region .b { font-size: .82rem; color: var(--jade); margin-top: 2px; }
+
+  .note { font-size: .8rem; color: rgba(236,229,211,.45); }
+  .sources { font-size: .8rem; }
+  .sources li { margin: 6px 0; color: rgba(236,229,211,.55); }
+  .sources a { color: #7da7d8; text-decoration: none; word-break: break-all; }
+  footer { text-align: center; margin-top: 80px; color: rgba(236,229,211,.35); font-size: .8rem; letter-spacing: .3em; }
+  footer .seal-s { display: inline-block; border: 1px solid var(--vermilion); color: var(--vermilion); padding: 4px 10px; margin-top: 14px; font-family: "Ma Shan Zheng", cursive; letter-spacing: .2em; }
+  .tag { display:inline-block; font-size:.72rem; padding:1px 7px; border-radius:2px; border:1px solid var(--line); color:rgba(236,229,211,.6); margin-left:6px; letter-spacing:.05em;}
+  @media (max-width: 640px) { nav.toc { columns: 1; } .cover .seal { font-size: 2.6rem; } }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="seal">影之刃零<br>武典</div>
+  <div class="sub">PHANTOM BLADE ZERO · 深度调研攻略</div>
+  <div class="meta">发售 2026-10-29 · PS5 / PC · S-GAME（灵游坊）· 深度修订 2026-10-29 晚</div>
+  <div class="divider">❖</div>
+  <p class="note">本版于发售当晚对全网十余家中英文来源（游民星空 / A9VG / 17173 / 18183 / 游戏早知道·新浪 / 网易 / 52PK / 九游 / 游侠网 / Wccftech / PCGamer / GamesRadar / GameSpot / GameRant / PCGamesN / Destructoid / phantombladezero.wiki / ButWhyTho 等）做交叉核对，凡多源一致方落笔，存疑处单列于文末。媒体攻略与首日实机或有出入，<strong>一切以游戏内为准</strong>。</p>
+</div>
+
+<nav class="toc">
+  <a href="#s1">壹 · 卷首语：这不是魂</a>
+  <a href="#s2">贰 · 江湖舆图：八大影境（地图/流程）</a>
+  <a href="#s3">叁 · 底层武理：杀气系统与键位</a>
+  <a href="#s4">肆 · 三光诀：信号灯应对</a>
+  <a href="#s5">伍 · 难度四境</a>
+  <a href="#s6">陆 · 兵谱：主武器与影之武装</a>
+  <a href="#s7">柒 · 群雄谱：Boss 打法全录</a>
+  <a href="#s8">捌 · 藏锋录：龙柱 / 榕树 / 面具 / 易错过</a>
+  <a href="#s9">玖 · 归途：结局与必做支线</a>
+  <a href="#s10">拾 · 开荒流程：按区域推进</a>
+  <a href="#s11">拾壹 · 三十诀要</a>
+  <a href="#s12">拾贰 · PC 性能实测</a>
+  <a href="#s13">附 · 来源与存疑</a>
+</nav>
+
+<!-- ============ 1 ============ -->
+<section id="s1">
+  <h2><span class="num">壹</span>卷首语：这不是魂</h2>
+  <div class="card">
+    <p><strong>《影之刃零》不是魂类游戏。</strong>没有跑尸、死亡不掉资源、Boss 二阶段失败<b>从二阶段直接重开</b>（Insider Gaming 确认）。它更像「武侠版动作游戏 × 轻只狼」：节奏极快、强调连招压制，攻防博弈集中在<span class="gold">杀气</span>与<span class="red">红蓝信号灯</span>上。权威评测（A9VG、游戏早知道）一致强调：它的内核更接近<strong>格斗游戏的"行云流水"</strong>——攻防可同时发生，你能在招架的缝隙里反击。</p>
+    <p>背景：主角「魂」是组织精锐杀手（"冥使"），被构陷弑主、心脏受创，只剩 <strong>66 天生命</strong>——倒计时贯穿剧情（坏结局=天数耗尽），但普通模式无真实时间压力。世界观承袭《雨血》系列（更古龙而非金庸），混入蒸汽机械、杀气改造、人偶，自成一派"功夫朋克"。</p>
+    <p>结构：8 张水墨箱庭无缝拼接（非完全开放世界）；30 种主武器 + 25 种副武器「影之武装」全部可夺取；主线 20–30 小时，全收集 40–60 小时，部分来源称 100% 可达百小时。36 个奖杯<b>一周目即可白金</b>（PowerPyx / A9VG 译）。媒体首发均分偏高，Steam 首发褒贬不一至多半好评区间，峰值约 40 万+ 同时在线。</p>
+  </div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section id="s2">
+  <h2><span class="num">贰</span>江湖舆图：八大影境</h2>
+  <p>本作世界名曰"影境"，由 <strong>8 幅纯手绘水墨大地图无缝拼接</strong>（17173 / 18183 / 游戏早知道 三源一致）。既非开放世界、也非纯线性：中心枢纽 + 多场景铺开，铃铛连点快速旅行，主线密集于庞镇与梅姑湖，陆家村、正道大营、狱山各只一两条主线。<strong>部分区域需拿到特定影之武装（如破锁链的斧、勾锚点的镰）后才可进入，鼓励回头重探。</strong></p>
+  <div class="mapflow">
+    <div class="region" data-idx="一">
+      <h4>悲泣溪谷 <span class="en">Weeping Creek Valley</span></h4>
+      <div class="q">主线：逆流而上 / 钢铁与蒸汽 / 赤红庄园（注：赤红庄园为谷内一处地点）</div>
+      <div class="b">关键：教学、杀气塔、残钢·彭猛·新娘阿花·追命；首根龙柱、妙手小张支线起点</div>
+    </div>
+    <div class="region" data-idx="二">
+      <h4>赤红森林 <span class="en">Crimson Forest（亦称血色森林）</span></h4>
+      <div class="q">主线：虚空的幻象 / 蛇之倒影</div>
+      <div class="b">关键：花千笑·荆野·双蛇夫人白赤练；虚空记忆之花×6；第二根龙柱；救出妙手小张（狡兔三窟）</div>
+    </div>
+    <div class="region" data-idx="三">
+      <h4>陆家村 <span class="en">Village of Lu</span></h4>
+      <div class="q">主线：无心的残余</div>
+      <div class="b">关键：多为人偶敌（免疫出血/吸血）；沐小葵（首三阶段）、碧海大师、毕远掌门、拙壁；沐小葵丝带×5、萤火记忆之花×6、稻草人法师→火焰面具</div>
+    </div>
+    <div class="region" data-idx="四">
+      <h4>庞镇 <span class="en">Pangzhen</span></h4>
+      <div class="q">主线：死亡之镇 / 心之轨迹 / 四蛇家族 / 前进之路</div>
+      <div class="b">关键：内容最密的中枢；舞狮尊主烈焰、长鸿（雷）、打火流星（火）；大量鬼差（复刻锦衣卫）；妙手小张宝藏；幻影庄园为真结局关键节点</div>
+    </div>
+    <div class="region" data-idx="五">
+      <h4>正道大营 <span class="en">Mandate Encampment</span></h4>
+      <div class="q">主线：昆仑支柱（Pillars of Kunlun）</div>
+      <div class="b">关键：需先过庞镇章节方可入内；白山风暴剑、软蛇剑等；护法面具相关试炼</div>
+    </div>
+    <div class="region" data-idx="六">
+      <h4>梅姑湖 <span class="en">Meigu Lake</span></h4>
+      <div class="q">主线：杀气驱动船 / 湖心之谜 / 虚荣的诱惑 / 幻境琵琶</div>
+      <div class="b">关键：乘杀气快船渡湖；尤龙二番战、穿心者；四面具→白影武器；第三、四、五根龙柱（含终局第五柱，与魔渊相关）</div>
+    </div>
+    <div class="region" data-idx="七">
+      <h4>狱山 <span class="en">Mountain of Imprisonment</span></h4>
+      <div class="q">主线：哭泣之源（Whence the Weeping）</div>
+      <div class="b">关键：囚禁与试炼之地；真结局支线节点之一</div>
+    </div>
+    <div class="region" data-idx="八">
+      <h4>魂断山 <span class="en">Mount Soulrend</span></h4>
+      <div class="q">主线：冥使幻象 / 血脉觉醒 / 魂的价值</div>
+      <div class="b">关键：终局区；"最后的钟声"为最终警告点，跨过即须打完结局方可出；真结局追加独占战斗</div>
+    </div>
+  </div>
+  <div class="card jade">
+    <p class="note"><strong>路线提示</strong>：上述为 TheGamer 整理、17173/18183 转引的主线推进顺序。庞镇被多方称为"中心枢纽"，但主线任务数最多的是庞镇与梅姑湖；陆家村、正道大营、狱山偏支线向。进入魂断山前部分支线会永久错过，详见捌、玖。</p>
+  </div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section id="s3">
+  <h2><span class="num">叁</span>底层武理：杀气系统与键位</h2>
+  <p>敌我各有「血条 + 杀气槽（血条下黄条）」。杀气是<strong>攻防共用的唯一资源</strong>——打空对方杀气 → 破防眩晕 → <span class="gold">处决窗口</span>；自己打空 → 硬直挨打。（A9VG、Wccftech、phantombladezero.wiki、九游 四源一致）</p>
+  <ul>
+    <li><strong>耗杀气</strong>：重攻击/杀气连招、保持架势（格挡）状态、影之武装技能、气劲爆发（绝技）。</li>
+    <li><strong>攒杀气</strong>：普攻命中（快武器更快）、完美格挡（弹反）、鬼步穿过红光、切换主武器（瞬间回满）。</li>
+    <li><strong>换武重置</strong>：战斗中切换主武器，<span class="gold">瞬间回满杀气槽</span>（有冷却）——核心求生手段，杀气见底就换。</li>
+    <li><strong>气劲爆发（绝技）</strong>：需"精纯杀气"槽全满，自带霸体、可打断对方、无视防御、演出华丽；点满天赋后上限仅 3 格，积攒苛刻（animattoys 评测）。</li>
+  </ul>
+
+  <h3>默认键位 <span class="tag">各来源对个别键略有出入，可改键，以游戏内为准</span></h3>
+  <table>
+    <tr><th>动作</th><th>PS5 手柄</th><th>PC 键鼠（综合默认）</th><th>说明</th></tr>
+    <tr><td>轻攻击</td><td>□</td><td>鼠标左键</td><td>不耗杀气，攒杀气、削敌杀气</td></tr>
+    <tr><td>重攻击 / 杀气连招</td><td>△</td><td>鼠标右键（或 F）</td><td>消耗杀气，伤害更高</td></tr>
+    <tr><td>招架（蓝光/猛击）</td><td>L1</td><td>Q</td><td>完美招架不耗杀气、反削敌杀气</td></tr>
+    <tr><td>鬼步（红光/杀招）</td><td>R1</td><td>E（或 Shift）</td><td>极限闪避绕到背后，触发鬼步</td></tr>
+    <tr><td>翻滚 / 普通闪避</td><td>○</td><td>Space</td><td>黑烟攻击亦可用此法</td></tr>
+    <tr><td>切换主武器</td><td>方向键←</td><td>1</td><td>切瞬间回满杀气（有冷却）</td></tr>
+    <tr><td>影之武装</td><td>R2</td><td>2 / R</td><td>消耗"暗源"</td></tr>
+    <tr><td>气劲爆发（绝技）</td><td>L2+R2</td><td>F</td><td>精纯杀气满槽</td></tr>
+    <tr><td>锁定 / 交互 / 蹲</td><td>R3 / ✕</td><td>鼠标中键 / F / C</td><td>WASD 移动，鼠标视角</td></tr>
+  </table>
+  <p class="note">注：九游/18183 将"闪避"记为 Shift，phantombladezero.wiki 将"鬼步"记为 E、"翻滚"记为 Space；"重攻击/处决"归属 F 或右键不同来源有异。综合以"蓝光 Q 招架、红光 E/Shift 鬼步、1 换主武回杀气"为最稳记忆法。</p>
+  <p>消极防守有代价：举着格挡不放会耗光自己的杀气。<strong>你的任务不是撑到 Boss 犯错，而是把它的杀气先削空——进攻就是最好的防守。</strong></p>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="s4">
+  <h2><span class="num">肆</span>三光诀：信号灯应对</h2>
+  <table>
+    <tr><th>信号</th><th>含义</th><th>应对</th><th>成功收益</th></tr>
+    <tr>
+      <td><span class="signal sig-blue">蓝光</span></td>
+      <td>猛击技 Brutal</td>
+      <td><strong>完美格挡（弹反）</strong>，只格挡不弹反会大量耗杀气</td>
+      <td>获 2 格杀气 + 更快积累；触发鬼步绕背</td>
+    </tr>
+    <tr>
+      <td><span class="signal sig-red">红光</span></td>
+      <td>杀招 / 抓技 Killer</td>
+      <td><strong>绝对不可格挡！</strong>最后一刻闪避 → 鬼步瞬移背后</td>
+      <td>获 1 格杀气 + 下次攻击伤害加成；绕背反击窗口</td>
+    </tr>
+    <tr>
+      <td><span class="signal sig-black">黑光</span></td>
+      <td>黑烟重击（部分 Boss）</td>
+      <td><strong>只能闪避</strong>，格挡会被直接清空杀气（也可用杀气硬抗补偿反应）</td>
+      <td>躲开后敌人大硬直</td>
+    </tr>
+  </table>
+  <div class="card jade">
+    <p><strong>社区口诀</strong>：红光按右肩键闪、蓝光按左肩键格，反应不过来就两个一起按。<span class="red">新手第一大死因 = 误把红光当蓝光硬招架。</span>黑光（黑烟）最早见于彭猛战，机制一致：必躲或耗杀气硬抗。</p>
+  </div>
+  <p><strong>鬼步</strong>：完美弹反或极限闪避后瞬移至敌人背后——背刺连段起手式，也是被压制时的默认答案。普攻不耗体力，持续进攻顺便削 Boss 杀气，<strong>打得越凶越安全</strong>。</p>
+</section>
+
+<!-- ============ 5 ============ -->
+<section id="s5">
+  <h2><span class="num">伍</span>难度四境</h2>
+  <table>
+    <tr><th>难度</th><th>定位</th><th>要点</th></tr>
+    <tr><td><strong>入阵者</strong> Wayfarer</td><td>剧情向</td><td>电影化体验，被围殴触发华丽群体演出；<strong>全部成就一周目最简难度即可拿完</strong></td></tr>
+    <tr><td><strong>破局者</strong> Pathbreaker</td><td>标准</td><td>标准动作游戏挑战</td></tr>
+    <tr><td><strong>逆天者</strong> Hellwalker</td><td>进阶</td><td>敌人读距离、惩罚空挥、<strong>实时学习你的出招习惯</strong>；弹反窗口收紧</td></tr>
+    <tr><td><strong>六十六天</strong> 66 Days</td><td>硬核</td><td>逆天者强度 + 真实倒计时（约 66 次死亡/天数上限），<strong>归零永久死亡 / 存档抹除</strong>；与奖杯无关</td></tr>
+  </table>
+  <div class="card">
+    <p class="red"><strong>重要更正</strong>：六十六天模式<strong>需通关一周目后才会解锁</strong>（18183、mfunz 一致），并非开局可选。社区共识：普通难度先通关攒武器 → 二周目挑战逆天者 → 66 天留到全成就之后。首日争议集中在「难度偏易」（Boss 锁阶段像 DMC 不像魂），追求挑战者建议直接上逆天者。</p>
+  </div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section id="s6">
+  <h2><span class="num">陆</span>兵谱：主武器与影之武装</h2>
+  <p>可同时装备 <strong>2 把主武器 + 2 把影之武装</strong>。主武器类型分三类：单手、双持（一对/长短）、双手。武器 / 影之武装<strong>每 5 级解锁一个新能力</strong>，最高 <strong>30 级</strong>，之后可<strong>铸魂（Soul Tempering）</strong>进行二次强化（网易/新浪/animattoys/ButWhyTho 四源一致）。升级材料 <strong>10 级前全额退还</strong>，之后消耗「逆练符」回退，资源慷慨——捡到啥试啥，别囤。</p>
+
+  <h3>影之武装 · 五大类（暗源驱动）</h3>
+  <p>副武器「影之武装」释放需消耗 <span class="gold">暗源</span> 资源（次数限制，碰铃铛休息即补满至上限；部分攻略亦记作"火花"）。多数副武器为单次生效、针对性强，且部分兼作<strong>开图钥匙</strong>。五大类（网易/新浪/animattoys 三源一致）：</p>
+  <table>
+    <tr><th>类别</th><th>用途</th><th>代表</th></tr>
+    <tr><td><strong>破坏</strong></td><td>破盾 / 破霸体，应对重盾敌</td><td>巨凶斧（一次碎盾）、长柄金瓜</td></tr>
+    <tr><td><strong>远程</strong></td><td>远程打断、清飞天怪</td><td>羽弓、雷当虎炮、烈焰狮头、火铳、高压水炮、三叉戟、血滴子</td></tr>
+    <tr><td><strong>召唤</strong></td><td>召帮手协战</td><td>白蟒赤练（近身刃 + 飞出伴刃）、弦音助战</td></tr>
+    <tr><td><strong>武学</strong></td><td>衔接连段、提升输出多样性</td><td>钩者镰刀、墨血无痕、锯者锯子</td></tr>
+    <tr><td><strong>奇门</strong></td><td>针对性策略卡</td><td>火狮头、水龙头（克制火/水属性敌）</td></tr>
+  </table>
+
+  <h3>媒体评「毕业级」主武器（中文名为媒体译名）</h3>
+  <table>
+    <tr><th>武器</th><th>类型</th><th>出处 / 亮点</th></tr>
+    <tr><td><strong>亡命斩马刀</strong></td><td>双手</td><td>荆野掉落。攻速、破盾、模组最强一档，附带攻击回血——<span class="gold">公认毕业武器</span></td></tr>
+    <tr><td><strong>残钢刃</strong></td><td>单手</td><td>教学 Boss 残钢掉落，附带出血（对人偶类无效，如新娘阿花）</td></tr>
+    <tr><td><strong>红妆鬼斩</strong></td><td>—</td><td>新娘阿花掉落，<strong>前期唯一破盾武器</strong></td></tr>
+    <tr><td><strong>痴者残剑</strong></td><td>单手</td><td>花千笑掉落。喝酒入微醺 → 普攻变飞剑（远程）；再饮入烂醉 → 飞剑强化 + 自动闪避但不能格挡；再饮放不可防飞剑乱舞后清醒</td></tr>
+    <tr><td><strong>贪狼</strong></td><td>—</td><td>1 点精纯杀气转圈吸血，对破防敌额外重击——吸血流核心</td></tr>
+    <tr><td><strong>铁拳套</strong></td><td>双持</td><td>破盾 / 逼退专用，碧海大师战关键</td></tr>
+    <tr><td><strong>追命锁镰</strong></td><td>影之武装</td><td>5 级解锁「如影附形」拉人控场；亦作勾锚点开图</td></tr>
+    <tr><td><strong>荡寇凶刃</strong></td><td>双手</td><td>公认上手最简单的防反轮椅武器：受击瞬间刀身变红，接重攻击清空敌杀气并一键处决</td></tr>
+  </table>
+
+  <h3>全武器分布（Destructoid 区域清单，英文名供对照）</h3>
+  <table>
+    <tr><th>区域</th><th>主武器（含掉落来源）</th></tr>
+    <tr><td>悲泣溪谷</td><td>木制血刃（默认）· 血刃（默认）· 血影双刃（沿路武器架）· 锯齿钢（残钢掉落）· 血刃长兵（铁匠铺旁）· 红妆鬼斩（新娘阿花）</td></tr>
+    <tr><td>赤红森林</td><td>痴者残剑（花千笑）· 亡命斩马刀（荆野）· 白蟒赤练（白赤练）· 寒霜混沌（残钢再次掉落）</td></tr>
+    <tr><td>陆家村</td><td>天玄青铜剑（毕远掌门，开井用）· 凶魔锯（沐小葵）· 野黄莺剑（沐小葵）</td></tr>
+    <tr><td>庞镇</td><td>破军（Cavalrybane，市集）· 离别钩（Soulclaimer，东北码头）</td></tr>
+    <tr><td>正道大营</td><td>白山风暴剑（21号剑傀 Yubi）· 软蛇剑（软剑 Wu Lengshuang）</td></tr>
+    <tr><td>梅姑湖</td><td>裂地双斧（穿心者）· 白影（集齐 4 面具 → 冰封区 → 击败雪暴剑主）</td></tr>
+    <tr><td>囚山</td><td>巨灵（Bi Feng 巨刃统领）· 无隙之死（白面 Jade-Face）</td></tr>
+  </table>
+  <p class="note">注：Destructoid 英文名为一手掉落核对；与中文媒体译名（如"亡命斩马刀=Outlaw Warblade"）为同一把武器的不同译法。人偶系（陆家村）免疫出血/吸血，残钢刃、亡命斩马刀在此类敌前效果大减。</p>
+
+  <h3>流派推荐</h3>
+  <div class="card">
+    <p><strong>流派一 · 破盾出血流（开荒）</strong>：残钢刃（出血）+ 红妆鬼斩（破盾）+ 巨凶斧 / 追命锁镰；饰品筋力绑带 + 追杀令；药瓶凝锋丹。前两个区域几乎无解。</p>
+  </div>
+  <div class="card gold">
+    <p><strong>流派二 · 疯狂吸血流（庞镇成型）</strong>：亡命斩马刀 + 贪狼吸血循环；副武器黑伤双刃 / 白蟒赤练叠精纯杀气；饰品妙手千均 + 筋力绑带 + 浑源经脉仪 + 无名大师的扳指；药带苦叶露（20% 免伤）。<span class="red">注意：杀气连招会暂扣血量，Boss 战少用，易翻车。</span></p>
+  </div>
+  <p class="note">技能点先点满一把武器的技能树，别撒胡椒面。饰品后期（陆家村）可强化——配装一半来自饰品。天赋树用资源点（黑石/琥珀/记忆之花/榕树之心）点亮，强化整体性能而非堆数值。</p>
+</section>
+
+<!-- ============ 7 ============ -->
+<section id="s7">
+  <h2><span class="num">柒</span>群雄谱：Boss 打法全录</h2>
+  <p class="note">以下打法要点综合游民星空全 Boss 指南与多源评测；带 ★ 为媒体评测点名的重要 Boss。部分中文 Boss 名为媒体译名，未经官方确认。</p>
+  <table>
+    <tr><th>Boss</th><th>位置</th><th>打法要点</th></tr>
+    <tr><td><strong>痴狂暴徒 · 残钢</strong> ★</td><td>悲泣溪谷</td><td>教学 Boss。先让杂兵耗它状态再上；掉的残钢刃是出血流起点</td></tr>
+    <tr><td><strong>斧老大 · 彭猛</strong></td><td>悲泣溪谷</td><td>背后重砸会<strong>清空你的杀气</strong>，必须闪；连踩之后接蓝光，抓节奏弹反。<span class="red">黑烟攻击首现于此，必躲</span></td></tr>
+    <tr><td><strong>新娘阿花</strong></td><td>杀气塔一层</td><td>人偶系，<span class="red">残钢刃出血无效</span>，换回黑伤。红花缩圈合体前远离；白花消失瞬间她必瞬移——预判鬼步</td></tr>
+    <tr><td><strong>「组织」猎杀者 · 追命</strong> ★</td><td>悲泣溪谷章末</td><td>二阶段频率高但杀气掉得快，<strong>乱按格挡都能削它</strong>。锁链紫雨横向跑出范围；贴脸一刻点格挡出大破绽；龙卷风远离</td></tr>
+    <tr><td><strong>剑痴 · 花千笑</strong> ★</td><td>赤红森林 · 远眺庞镇之桥</td><td>喝酒时杀气转护盾。<span class="gold">逃课法：跑桥另一头等他杀气自然掉光再回去破防</span>。三阶段入醉意、御剑快慢刀；零帧投技无伤害不用怕</td></tr>
+    <tr><td><strong>亡命徒 · 荆野</strong> ★</td><td>赤红森林</td><td>前半骑马（<strong>斩骑符</strong>加伤）；2/3 血下马持荆棘盾<strong>反伤</strong>；用巨凶斧蓄力三连破盾；烟雾突刺是黑光必须闪。掉<span class="gold">毕业武器亡命斩马刀</span></td></tr>
+    <tr><td><strong>双蛇夫人 · 白赤练</strong> ★</td><td>赤红森林章末</td><td>一阶段突进黑光最难躲；二阶段<strong>集齐 6 朵虚空记忆之花 → 弦音助战</strong>（漏了花就没帮手，硬打很难）；召唤物打掉 2 个即破防</td></tr>
+    <tr><td><strong>舞狮尊主 · 烈焰</strong> ★ <span class="tag">新增</span></td><td>庞镇</td><td>登场含现场录制舞狮配乐。<span class="gold">先击败一名用"水龙头"的 Boss 再打他，难度大降</span>。对战前可拿抗火饰品</td></tr>
+    <tr><td><strong>长鸿（雷）· 打火流星（火）</strong></td><td>庞镇</td><td>分别对应雷电 / 火焰属性，战前可取得对应减伤饰品；奇门类影之武装（水龙头/火狮头）克制</td></tr>
+    <tr><td><strong>守门人 · 拙壁</strong> / 毕远掌门 / 碧海大师</td><td>陆家村</td><td>拙壁必须破盾武器；毕远掉天玄青铜剑（开井用）；碧海金钟罩 + 3 僧侣围攻，<strong>铁拳套三连破盾</strong>是答案</td></tr>
+    <tr><td><strong>沐小葵</strong> ★</td><td>陆家村</td><td>首个<strong>三阶段</strong> Boss；<span class="gold">集齐 5 条丝带 → 增加新阶段 + 额外强力武器</span>；留爆发技进三阶段</td></tr>
+    <tr><td><strong>七星剑阵 · 大师兄</strong> ★ <span class="tag">新增</span></td><td>—</td><td>剑阵类多体战，注意走位与破阵节奏（评测点名，具体机制以游戏内为准）</td></tr>
+    <tr><td><strong>尤龙二番战 / 穿心者</strong></td><td>梅姑湖</td><td>尤龙岛上为 rematch；穿心者（第三影卫）掉裂地双斧</td></tr>
+    <tr><td><strong>金面人 / 魔渊 ×隐藏</strong></td><td>五根龙柱 / 终局</td><td>甄子丹动捕 + 英文配音 + 创意监制的<strong>隐藏最终 Boss</strong>，身份即黑衣人 / 魂之父、暗魔天堡之主。每次遭遇解锁新招；杀气回复极快近乎无法破防，靠输出压死；抓技红光必闪</td></tr>
+  </table>
+  <div class="card jade">
+    <p><strong>关于魔渊</strong>：官方说法是「需要一系列探索与试炼才能触发的<strong>隐藏最终 Boss</strong>」，其身份即五根龙柱中的金面黑衣人（GamingBolt、PCGamesN），是暗魔天堡之主、魂的父亲——整个探索系统的终点，不是普通章节 Boss。</p>
+  </div>
+  <p>通用心法：Boss 多数两阶段，<strong>二阶段死亡从二阶段重开</strong>，放心去试；可选 Boss（三面傀儡、金面人早期形态等）打不过就标记绕路。</p>
+</section>
+
+<!-- ============ 8 ============ -->
+<section id="s8">
+  <h2><span class="num">捌</span>藏锋录：龙柱 / 榕树 / 面具 / 易错过</h2>
+
+  <h3>龙柱 ×5（GameSpot 汇总）</h3>
+  <table>
+    <tr><th>#</th><th>位置 / 解锁条件</th><th>奖励</th></tr>
+    <tr><td>1</td><td>悲泣溪谷 —— 需「深谷」任务 + 锈蚀龙钥</td><td>反击护腕</td></tr>
+    <tr><td>2</td><td>赤红森林 —— 铁热病战后隧道</td><td>奇迹剑鞘</td></tr>
+    <tr><td>3</td><td>梅谷湖东岛 —— 坐机械船前往</td><td>Flaming Grip</td></tr>
+    <tr><td>4</td><td>梅谷湖 Discordance —— 需 4 面具 + 四守护之镜</td><td>Chaos Iron Fragment I</td></tr>
+    <tr><td>5</td><td><span class="red">媒体主动打码</span>（终局区，疑与魔渊最终战相关）</td><td>未公开</td></tr>
+  </table>
+
+  <h3>榕树试炼 ×5（榕树之心）</h3>
+  <p>位置：赤红森林（葬地钟往南）/ 庞镇青龙宅后 / 天命营坡道右转 / 梅谷湖东南岛 / 囚山吊桥后。每处<strong>两波杂兵 + 旧 Boss 复战或双打</strong>，死亡从当前波继续。得「榕树之心」，另可在妙手小张处以 <span class="gold">10 万残尘/个买 3 个</span>——共 8 个解锁天赋树交叉节点（如 Boundless Capacity Lv.3 = 饰品槽 +1；Against All Odds = 每战一次免死）。</p>
+
+  <h3>护法面具 ×4（Acolyte Masks）</h3>
+  <p>由隐藏 Boss 掉落，集齐 4 枚可前往梅谷湖冰封区提交，进入 Discordance 领域并击败雪暴剑主，获得<strong>白影</strong>武器——亦是龙柱 4 的解锁前提之一。</p>
+
+  <h3>容易错过 / 永久失败</h3>
+  <div class="card">
+    <ul>
+      <li><span class="red">可错过奖杯约 7 个</span>：昭昭心与血、禁法湖底沉、白山遗烈、白首不相离、浪子侠心、鬼斩客、杏林有继（PowerPyx）。</li>
+      <li>6 朵<strong>虚空记忆之花</strong>：漏了 → 白赤练二阶段没有弦音助战。</li>
+      <li>陆家村：<strong>5 条沐小葵丝带</strong>（加阶段+武器）、<strong>6 朵萤火记忆之花</strong>（开隐藏 Boss + 关键支线）；<strong>稻草人法师→火焰面具</strong>（后期关键道具）。</li>
+      <li>赤红山庄深处：<strong>寒髓 + 傀儡清道夫双打</strong>，掉真结局关键道具 Crystal Puppet Eye: Yang。</li>
+      <li>追踪标记的任务<strong>离开区域前先做完</strong>，部分会永久失败；小翠支线需到很后章节才完成，不必在陆家村死等。</li>
+      <li>两处不可回头点：庞镇青龙宅开门进蜃楼（会弹提示）；最终区<strong>魂断山 "最后的钟声"</strong> 不再提醒 = 最后机会。通关后可用「最后一次机会之钟」补做部分内容。</li>
+    </ul>
+  </div>
+  <p>通用：见到「钟」就敲——快速移动点，休息回药品与影之武装次数（<strong>不重置敌人</strong>，和魂系不同）；收集品即成长——黑石（攻击/破防）、杀气琥珀（体力上限）、记忆之花（HP + 剧情），区域 Boss 前集齐记忆之花常触发额外阶段或独特武器；调查物件 / 笔记给残尘还可能解锁新支线；<strong>潜行别忘用</strong>（C 蹲下）——暗杀秒杂兵，多敌人近身触发 QTE 连环暗杀。</p>
+</section>
+
+<!-- ============ 9 ============ -->
+<section id="s9">
+  <h2><span class="num">玖</span>归途：结局与必做支线</h2>
+  <div class="card">
+    <p><strong>纠正常见误解</strong>：所谓「8 种结局」里多数是普通结局的变体，真正有独立内容的是 <span class="gold">1 个真结局·破煞</span>（GameRant / 游侠网）。66 天耗尽 = 坏结局。普通结局走向含妥协、复仇、逃离等分支，取决于支线完成度与持有物。</p>
+    <p><strong>真结局条件（游侠网细化，比旧版更精确）</strong>：</p>
+    <ul>
+      <li><strong>第一个截止点</strong>：在进入庞镇<strong>幻影庄园（四蛇之屋末尾）</strong>之前，必须完成<em>全部紫色图标支线</em>：深谷之中、伊南尼斯的幻影、沙池动力船、虚荣的诱惑、幻影琵琶、昆仑之柱、哭泣之源、使者幻象、绯红庄园、湖心秘密。没做完就进庄园会弹警告。</li>
+      <li><strong>血脉觉醒</strong>：进入幻影庄园后，完成<strong>全部 5 根龙柱挑战</strong>（第 5 根最晚）。建议在推进到魂断山前清掉其余支线，因入该区后部分支线永久错过。</li>
+      <li><strong>最终警告</strong>：魂断山"最后的钟声"处进入最终 Boss 区前，游戏给出最后一次警告（无论是否做完都会提示）。跨过即须打完结局方可出。</li>
+      <li>完成上述后击败孟华，将迎战<strong>真正最终 Boss（魔渊）</strong>，触发真结局并解锁「心血相连」成就。<strong>无需二周目即可全成就</strong>。</li>
+    </ul>
+  </div>
+  <p class="note">存疑：第八结局具体触发条件各站只说「取决于支线完成度 + 持有物品」，无一手来源列出完整清单；妙手小张全部宝藏是否为硬性条件，各源表述不一。</p>
+</section>
+
+<!-- ============ 10 ============ -->
+<section id="s10">
+  <h2><span class="num">拾</span>开荒流程：按区域推进</h2>
+  <ol class="jue">
+    <li><strong>序章 · 悲泣溪谷（0–2h）</strong>：马车高速战教学，<strong>防御教学不要跳</strong>。杂兵身上练熟蓝光弹反；首个据点练鬼步背刺；拿到第一件影之武装立刻装备。首个 Boss（60–90min）只盯红光——杀招只能躲不能接。</li>
+    <li><strong>赤红森林（2–6h）</strong>：救出妙手小张触发「狡兔三窟」；集齐 6 朵虚空记忆之花（打白赤练有弦音助战）；第二根龙柱建议后返；花千笑、荆野、白赤练连战，掉痴者残剑 / 亡命斩马刀 / 白蟒赤练。</li>
+    <li><strong>陆家村（6–10h）</strong>：敌多为人偶，出血/吸血失效，换黑伤或钝器；集齐 5 条沐小葵丝带、6 朵萤火记忆之花；打稻草人法师拿火焰面具；三眼人偶（关系真结局）在试验场传送门内。</li>
+    <li><strong>庞镇（10–18h，内容最密）</strong>：先打"水龙头"Boss 再战舞狮尊主降难度；拿抗火/抗雷饰品应对打火流星/长鸿；做老根头、兰公子支线；集蛇雕像任务后再通往终局，<strong>勿急着走</strong>。</li>
+    <li><strong>正道大营 → 梅姑湖（18–24h）</strong>：需先过庞镇；梅姑湖乘杀气快船，做尤龙二番战、穿心者；集 4 面具进 Discordance 取白影；第三、四、五龙柱在此。</li>
+    <li><strong>狱山 → 魂断山（终局）</strong>：入魂断山前确认龙柱全清、紫色支线全做；"最后的钟声"为最终警告点。推主线前先做支线——结局与好武器都在支线里。</li>
+    <li><strong>通用</strong>：见到钟就敲；配「单手 + 双手」武器组合，杀气见底切武回满；技能点集中投一把武器。</li>
+  </ol>
+</section>
+
+<!-- ============ 11 ============ -->
+<section id="s11">
+  <h2><span class="num">拾壹</span>三十诀要</h2>
+  <ol class="jue">
+    <li>普攻不耗体力/杀气，打得越凶越安全，顺便削 Boss 杀气。</li>
+    <li>杀气见底就<strong>换武器</strong>——瞬间回满，是核心求生手段（有冷却）。</li>
+    <li>蓝光猛击=招架（Q/L1），红光杀招=只闪（E/R1/Shift），<strong>红光绝对不招架</strong>。</li>
+    <li>黑光（黑烟）重击必躲或耗杀气硬抗，格挡 = 杀气清零。</li>
+    <li>完美弹反白赚一轮输出——练弹反是本作回报率最高的投资。</li>
+    <li>杀气连段（高伤消耗技）用在刚弹反后或对方破防时收益最大；会暂扣血量，Boss 战慎用。</li>
+    <li>敌人身上出现 RT/交互提示时，零消耗扔影之武装（暗源）。</li>
+    <li>暗源有限，留给精英和 Boss；碰铃铛休息即补满（不像只狼纸人是消耗品）。</li>
+    <li>气劲爆发（绝技）自带霸体可打断——留到 Boss 关键连段或三阶段开局。</li>
+    <li>先点「精纯杀气上限」「死亡保留精纯杀气」，再点「饰品上限 +1」「药瓶次数 +1」。</li>
+    <li>收集品即成长：黑石 / 杀气琥珀 / 记忆之花全在地图里，探索就是升级。</li>
+    <li>Boss 前集齐记忆之花，常触发额外阶段或独特武器奖励。</li>
+    <li>主武器/影之武装每 5 级解锁新能力；最高 30 级 + 铸魂，记得看是什么并放进连招。</li>
+    <li>升级材料 10 级前全额退还，之后逆练符回退，捡到啥试啥，别囤。</li>
+    <li>单手 + 双手各一把：材料分开、克制面互补、换武回杀气。</li>
+    <li>轻刃打不动重盾就换钝器/破坏类影之武装，别回去刷级。</li>
+    <li>开荒选破盾出血流（残钢刃 + 红妆鬼斩）；人偶系免疫出血。</li>
+    <li>骑马 Boss 前装斩骑符（荆野战）；对火/雷属性敌备对应减伤饰品。</li>
+    <li>饰品是配装的另一半，陆家村后可强化；天赋树用黑石/琥珀/记忆之花/榕树之心点亮。</li>
+    <li>完成榕树试炼拿榕树之心；买满共 8 个，解锁免死等交叉节点。</li>
+    <li>潜行暗杀（C 蹲）秒杂兵，多敌近身有 QTE 连环暗杀。</li>
+    <li>死亡无惩罚，Boss 二阶段失败从二阶段重开——大胆去试。</li>
+    <li>区域任务离开前做完，部分永久失败；可选 Boss 打不过就标记绕路。</li>
+    <li>调查物件 / 笔记给残尘，可能解锁新支线；特定影之武装是开图钥匙，记得回头重探。</li>
+    <li>连招不靠背表：轻攻击接终结技、换武回杀气续段——高手差在「何时收招」。</li>
+    <li>嫌简单直接切逆天者——Boss 会学习你的出招习惯；六十六天需通关后解锁。</li>
+    <li>药瓶记得升级（治疗量 / 回体力 / 减伤 + 次数），苦叶露免伤 20%。</li>
+  </ol>
+</section>
+
+<!-- ============ 12 ============ -->
+<section id="s12">
+  <h2><span class="num">拾贰</span>PC 性能实测（发售日）</h2>
+  <div class="card">
+    <ul>
+      <li>引擎 UE5 + Denuvo，<strong>首次启动着色器编译较久</strong>，属正常现象；支持硬件光追与<strong>完整路径追踪</strong>（Wccftech 独家确认）。</li>
+      <li><strong>最低</strong>：i7-8700K / R5 3600、16GB、GTX 1660 6GB / RX 5500 XT 8GB、SSD。 <strong>推荐</strong>：i5-10600K / R5 5600X、RTX 3060 Ti / RX 6700 XT。</li>
+      <li>光追 1080p/60 需 RTX 5060；<strong>路径追踪 4K 需 RTX 5080</strong>；DLSS 4.5 到位。</li>
+      <li>RTX 4080 / 4K High + DLSS Quality ≈ <strong>100fps</strong>；开光追掉到 50 多；路径追踪 ≈ 30fps（Wccftech / DSOGaming）。</li>
+      <li><span class="red">Steam Deck 最低画质 &lt;30fps，官方劝退</span>，掌机玩家别买亏。</li>
+      <li>PS5 基础版性能模式基本 60fps；庞镇雨区与部分 Boss 战偶有掉帧。PC 版对 DualSense 自适应扳机/扬声器/触摸板支持良好。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 13 ============ -->
+<section id="s13">
+  <h2><span class="num">附</span>来源与存疑</h2>
+  <ul class="sources">
+    <li>游民星空 · 全 BOSS 打法 / 武器排行 / 全支线 / 沉思杂记地图 <a href="https://www.gamersky.com/handbook/202610/2235534.shtml">gamersky.com/handbook/202610/2235534</a></li>
+    <li>17173 · 八大地图主线章节（TheGamer 整理） <a href="https://news.17173.com/content/10272026/093903199.shtml">news.17173.com/content/10272026/093903199</a> · 各章节探索指南 <a href="https://news.17173.com/content/10292026/110516253.shtml">110516253</a></li>
+    <li>18183 · 通关时长与章节列表 <a href="https://news.18183.com/yxxw/202610/9068744.html">news.18183.com/yxxw/202610/9068744</a> · PC 键位 <a href="https://m.18183.com/gonglue/202608/6ibh25lq.html">18183 键位</a></li>
+    <li>游戏早知道（yxzzd）/ 新浪 · 96分评测（50h+完美结局，体量/武器/BOSS 全录） <a href="https://cj.sina.com.cn/articles/view/1239720361/49e4a1a900102wrss">sina 早知道评测</a></li>
+    <li>网易 · 50小时20条技巧 / 评测无愧于心 / 早知道转载 <a href="https://www.163.com/dy/article/LADB65SK05561FY2.html">163 LADB65SK</a> · <a href="https://www.163.com/dy/article/LACH97RO05268R0M.html">163 LACH97RO</a> · <a href="https://c.m.163.com/news/a/LA5GJ08P0526D8LR.html">163 无愧于心</a></li>
+    <li>A9VG · 评测（杀气系统 / 武器 / 非魂） <a href="https://a9vg.com/article/246021">a9vg.com/article/246021</a> · PowerPyx 奖杯译 <a href="https://bbs.a9vg.com/thread-9075033-1-1.html">bbs.a9vg.com/thread-9075033</a></li>
+    <li>Wccftech · Everything We Know（8区域/难度/PC配置/路径追踪） <a href="https://www.wccftech.com/phantom-blade-zero-everything-we-know">wccftech.com/phantom-blade-zero-everything-we-know</a></li>
+    <li>Destructoid · All weapons & how to find them <a href="https://www.destructoid.com/all-weapons-in-phantom-blade-zero-and-how-to-find-them">destructoid.com/all-weapons…</a></li>
+    <li>GameSpot · 龙柱 / 榕树 / 面具攻略 <a href="https://www.gamespot.com/articles/phantom-blade-zero-long-pillar-gold-masked-one/">gamespot.com/articles/…</a></li>
+    <li>GameRant · 真结局条件 <a href="https://www.gamerant.com/phantom-blade-zero-how-get-true-perfect-ending-true-battle-requirements/">gamerant.com/phantom-blade-zero-how-get-true-perfect-ending…</a></li>
+    <li>游侠网 · 真结局达成条件与步骤 <a href="https://gl.ali213.net/html/2026-10/1820513.html">gl.ali213.net/html/2026-10/1820513</a></li>
+    <li>PCGamer · 50h Top 20 Tips <a href="https://www.pcgamer.com/games/action/phantom-blade-zero-tips/">pcgamer.com/games/action/phantom-blade-zero-tips/</a> · GamesRadar+ · New player tips <a href="https://www.gamesradar.com/games/action-rpg/phantom-blade-zero-tips/">gamesradar.com/…/phantom-blade-zero-tips/</a></li>
+    <li>PCGamesN · Bosses 列表 · GamingBolt · 魔渊隐藏 Boss · phantombladezero.wiki（中/英）操作与战斗 <a href="https://phantombladezero.wiki/zh-cn">phantombladezero.wiki/zh-cn</a></li>
+    <li>52PK · 武器系统介绍（主/副分类） <a href="https://pc.52pk.com/miji/7614158.shtml">pc.52pk.com/miji/7614158</a> · 九游 · 全流程图文（键鼠操作） <a href="https://www.9game.cn/yingzhirenling/12167727.html">9game.cn/yingzhirenling/12167727</a></li>
+    <li>ButWhyTho · 评测（Forge/Jewel/Myst 升级三系、Soul Tempering、NG+） <a href="https://butwhytho.net/2026/10/phantom-blade-zero-review-s-game-wuxia">butwhytho.net/2026/10/phantom-blade-zero-review</a> · animattoys · 10分评测（暗源/五类/铸魂） <a href="https://animattoys.com/detail/Qq489Ct8/">animattoys.com/detail/Qq489Ct8/</a></li>
+    <li>mfunz · PC版使用教程与键位 <a href="https://www.mfunz.com/pcsoft/369.html">mfunz.com/pcsoft/369</a> · 官方站 <a href="https://pbz.s-game.cn/">pbz.s-game.cn</a></li>
+  </ul>
+  <div class="card jade">
+    <p class="note"><strong>存疑声明</strong>：① 第八结局完整触发清单无一手来源；② 第五根龙柱 Boss 与奖励被媒体打码，「即魔渊最终战」未经交叉验证；③ 部分 Boss 中文名为媒体译名（kungfupunk 自述未经官方确认），英文名以 Destructoid 为核对基准；④ 个别 PC 键位各源有出入（重攻击/处决归属、鬼步键），以游戏内设置为准；⑤ 六十六天解锁节点：18183 与 mfunz 称"通关后解锁"，与部分英文媒体"开局可选"表述冲突，本版采前者；⑥ NGA/贴吧首日长贴因反爬未读到原帖，社区反馈改用 Steam 讨论区与 Reddit。各来源对「红/蓝/黑光」称呼不一但机制一致，以游戏内教学为准。</p>
+  </div>
+</section>
+
+<footer>
+  六十六日 · 刃不归鞘
+  <div class="seal-s">youyyy 谨制 · 深度调研版</div>
+</footer>
+
+</body>
+</html>
