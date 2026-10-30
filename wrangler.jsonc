@@ -1,0 +1,9 @@
+{
+  // Worker 名称 = 部署后的子域名
+  "name": "phantom-blade-zero-research",
+  "compatibility_date": "2026-10-01",
+  // 静态资源：仓库根目录下的文件全部托管，无需写任何后端代码
+  "assets": {
+    "directory": "./"
+  }
+}
