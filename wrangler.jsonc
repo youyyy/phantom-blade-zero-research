@@ -2,8 +2,11 @@
   // Worker 名称 = 部署后的子域名
   "name": "phantom-blade-zero-research",
   "compatibility_date": "2026-10-01",
-  // 静态资源：仓库根目录下的文件全部托管，无需写任何后端代码
+  // 后端入口：所有未命中静态文件的请求（如 /api/*）都进 src/index.ts
+  "main": "src/index.ts",
+  // 静态资源：根目录文件直接托管；命不中的交给 Worker 处理
   "assets": {
-    "directory": "./"
+    "directory": "./",
+    "binding": "ASSETS"
   }
 }
