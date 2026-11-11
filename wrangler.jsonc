@@ -1,18 +1,8 @@
 {
-  // Worker 名称 = 部署后的子域名
-  "name": "phantom-blade-zero-research",
+  // 《影之刃零 · 武典》纯静态站点：无 Workers 函数、无 D1 数据库
+  "name": "phantom-blade-zero-codex",
   "compatibility_date": "2026-10-01",
-  // 后端入口：所有未命中静态文件的请求（如 /api/*）都进 src/index.ts
-  "main": "src/index.ts",
-  // D1 数据库绑定：代码里用 env.DB 访问
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "tips-db",
-      "database_id": "987344e5-1970-4b54-96bf-f5badd1b9b92"
-    }
-  ],
-  // 静态资源：根目录文件直接托管；命不中的交给 Worker 处理
+  // 仓库根目录即站点根目录，index.html 为入口
   "assets": {
     "directory": "./",
     "binding": "ASSETS"
