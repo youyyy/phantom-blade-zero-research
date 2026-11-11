@@ -3,50 +3,336 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>影之刃零攻略站 · Workers 全栈 Demo</title>
-<style>
-  body { font-family: -apple-system, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; color: #222; }
-  h1 { font-size: 1.5rem; } h1 small { color: #888; font-weight: normal; font-size: .8rem; }
-  .card { border: 1px solid #e5e5e5; border-radius: 8px; padding: 12px 16px; margin: 12px 0; }
-  .card b { display: block; margin-bottom: 4px; }
-  .meta { color: #888; font-size: .8rem; margin-top: 8px; }
-  input { padding: 8px; width: 60%; border: 1px solid #ccc; border-radius: 6px; }
-  button { padding: 8px 16px; border: none; background: #f6821f; color: #fff; border-radius: 6px; cursor: pointer; }
-  a { color: #f6821f; }
-</style>
+<meta name="description" content="《影之刃零》全流程攻略武典：八境流程、全收集、61 场首领图鉴与分阶段配装、支线任务链、三结局、36 奖杯与不可逆避坑清单。">
+<title>影之刃零 · 武典 | 全流程 · 全收集 · 全结局</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%237c241b'/%3E%3Ctext x='32' y='47' font-size='40' text-anchor='middle' fill='%23ece3d0'%3E%E5%88%83%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<h1>影之刃零攻略站 <small>Cloudflare Workers 全栈 Demo</small></h1>
-<p>本页面是静态文件（仓库根目录的 <code>index.html</code>），数据来自同域 Workers API —— 这就是 Cloudflare 全栈项目的形态。</p>
 
-<p>
-  <input id="q" placeholder="搜索关键词，如：闪避">
-  <button onclick="load()">搜索</button>
-</p>
+<!-- 开卷：刀光载入 -->
+<div class="opening" id="opening" aria-hidden="true">
+  <div class="opening-seal">武<br>典</div>
+  <div class="opening-slash"></div>
+  <div class="opening-word">入 阵</div>
+</div>
 
-<div id="list">加载中…</div>
-<p class="meta" id="server-info"></p>
+<div class="grain" aria-hidden="true"></div>
+<div class="scroll-progress" id="scrollProgress"></div>
 
-<p>
-  其他页面：<a href="影之刃零攻略调研-20261029.html">攻略调研报告</a> ·
-  API：<a href="/api/tips">/api/tips</a> · <a href="/api/server-info">/api/server-info</a>
-</p>
+<!-- 顶栏 -->
+<header class="topbar" id="topbar">
+  <a class="brand" href="#top" aria-label="回到卷首">
+    <span class="brand-seal">刃</span>
+    <span class="brand-txt"><b>影之刃零 · 武典</b><i>PHANTOM BLADE ZERO CODEX</i></span>
+  </a>
+  <nav class="nav" id="nav" aria-label="卷目导航">
+    <a href="#xinf">心法</a>
+    <a href="#liucheng">八境</a>
+    <a href="#qunxiong">群雄</a>
+    <a href="#bingpu">兵谱</a>
+    <a href="#shouji">收集</a>
+    <a href="#zhixian">异闻</a>
+    <a href="#jiejv">结局</a>
+    <a href="#chengjiu">奖杯</a>
+    <a href="#bikeng">避坑</a>
+  </nav>
+  <button class="progress-btn" id="progressBtn" aria-label="查看我的进度" title="查看我的进度">
+    <svg viewBox="0 0 40 40" aria-hidden="true">
+      <circle class="ring-bg" cx="20" cy="20" r="16"></circle>
+      <circle class="ring-fg" id="ringFg" cx="20" cy="20" r="16"></circle>
+    </svg>
+    <span id="progressPct">0%</span>
+  </button>
+</header>
 
-<script>
-async function load() {
-  const q = document.getElementById('q').value;
-  const res = await fetch('/api/tips' + (q ? `?q=${encodeURIComponent(q)}` : ''));
-  const { data } = await res.json();
-  document.getElementById('list').innerHTML = data.length
-    ? data.map(t => `<div class="card"><b>${t.title}</b>${t.content}</div>`).join('')
-    : '<div class="card">没有匹配结果</div>';
-}
-load();
+<!-- 进度抽屉 -->
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head"><b>行囊 · 进度</b><button id="drawerClose" aria-label="关闭">✕</button></div>
+  <p class="drawer-note">勾选状态只保存在本机浏览器，不上传。</p>
+  <div id="drawerStats"></div>
+  <button class="btn-ghost drawer-reset" id="resetProgress">清空全部勾选</button>
+</aside>
+<div class="drawer-mask" id="drawerMask"></div>
 
-fetch('/api/server-info').then(r => r.json()).then(({ data }) => {
-  document.getElementById('server-info').textContent =
-    ` served by Cloudflare edge node ${data.colo} (${data.region}) · ${data.serverTime}`;
-});
-</script>
+<!-- ============ 卷首 ============ -->
+<main id="top">
+<section class="hero" id="hero">
+  <svg class="hero-art" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0a0e12"/>
+        <stop offset="45%" stop-color="#161a1e"/>
+        <stop offset="100%" stop-color="#221a17"/>
+      </linearGradient>
+      <radialGradient id="moonGlow">
+        <stop offset="0%" stop-color="#c8402f" stop-opacity=".55"/>
+        <stop offset="55%" stop-color="#9c2f24" stop-opacity=".16"/>
+        <stop offset="100%" stop-color="#9c2f24" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="moonFace" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#d4593e"/>
+        <stop offset="100%" stop-color="#8d2a21"/>
+      </linearGradient>
+      <linearGradient id="fog" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#c9bda6" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#c9bda6" stop-opacity=".13"/>
+      </linearGradient>
+      <linearGradient id="blade" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#f0e4cf"/>
+        <stop offset="100%" stop-color="#8c2d22"/>
+      </linearGradient>
+    </defs>
+    <rect width="1440" height="900" fill="url(#sky)"/>
+    <circle cx="1040" cy="248" r="290" fill="url(#moonGlow)"/>
+    <circle cx="1040" cy="248" r="126" fill="url(#moonFace)" opacity=".88"/>
+    <circle cx="1004" cy="212" r="20" fill="#6d2119" opacity=".22"/>
+    <circle cx="1072" cy="282" r="32" fill="#6d2119" opacity=".18"/>
+    <circle cx="1058" cy="196" r="12" fill="#6d2119" opacity=".2"/>
+
+    <!-- 远山 -->
+    <path class="layer layer-3" d="M0 610 L120 520 L215 566 L330 442 L420 520 L540 410 L650 505 L760 430 L870 520 L980 452 L1100 540 L1220 470 L1330 545 L1440 480 L1440 900 L0 900 Z" fill="#1e2428" opacity=".72"/>
+    <path class="layer layer-2" d="M0 680 L110 600 L230 648 L350 540 L470 630 L600 530 L720 620 L840 560 L960 645 L1090 575 L1210 655 L1330 590 L1440 660 L1440 900 L0 900 Z" fill="#151b20" opacity=".9"/>
+    <!-- 近山 -->
+    <path class="layer layer-1" d="M0 790 L160 700 L300 762 L430 680 L560 780 L700 705 L860 792 L1000 720 L1140 800 L1280 730 L1440 805 L1440 900 L0 900 Z" fill="#0b1014"/>
+
+    <!-- 雾带 -->
+    <rect class="fogband" x="0" y="520" width="1440" height="300" fill="url(#fog)"/>
+    <ellipse cx="720" cy="742" rx="720" ry="70" fill="#b9ad96" opacity=".045"/>
+
+    <!-- 飞鸟 -->
+    <g fill="none" stroke="#8e887a" stroke-width="2" opacity=".35">
+      <path d="M300 250 q12 -10 24 0 q12 -10 24 0"/>
+      <path d="M368 218 q9 -8 18 0 q9 -8 18 0"/>
+      <path d="M262 292 q8 -7 16 0 q8 -7 16 0"/>
+    </g>
+
+    <!-- 枯枝 -->
+    <g stroke="#05080a" stroke-width="6" fill="none" opacity=".85" stroke-linecap="round">
+      <path d="M1440 120 Q1340 170 1300 280 Q1280 340 1210 380"/>
+      <path d="M1330 190 Q1280 175 1240 130"/>
+      <path d="M1295 292 Q1250 300 1210 270"/>
+      <path d="M1215 378 Q1170 370 1140 330"/>
+    </g>
+
+    <!-- 剑客剪影 -->
+    <g class="swordsman" transform="translate(1080 780)">
+      <ellipse cx="0" cy="18" rx="150" ry="18" fill="#05080a" opacity=".75"/>
+      <path d="M-120 16 Q-70 -6 -10 4 Q50 -8 118 16 Z" fill="#070b0e"/>
+      <path d="M-14 -128 C-28 -126 -31 -110 -27 -96 L-34 -44 L-46 2 L-20 2 L-10 -48 L8 -48 L20 2 L46 2 L30 -50 L24 -98 C29 -112 22 -130 4 -130 Z" fill="#05080a"/>
+      <path d="M-26 -96 Q-72 -58 -84 6 L-46 2 L-34 -44 Z" fill="#0d1216"/>
+      <path d="M24 -98 Q58 -70 66 -10 L30 -50 Z" fill="#0d1216"/>
+      <path d="M26 -92 L74 -158 L82 -152 L34 -84 Z" fill="url(#blade)" opacity=".92"/>
+      <path d="M22 -86 L38 -96" stroke="#c8402f" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="2" cy="-142" r="13" fill="#05080a"/>
+      <path d="M-12 -150 Q2 -162 16 -150 L14 -142 Q2 -150 -10 -142 Z" fill="#05080a"/>
+    </g>
+  </svg>
+
+  <div class="hero-petals" id="heroPetals" aria-hidden="true"></div>
+  <div class="hero-vignette" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span class="dot"></span> S-GAME ·<span class="eb-cn"> 灵游坊　|　</span> 2026-10-29 · PS5 / PC</div>
+    <div class="hero-title-wrap">
+      <h1 class="hero-title" id="heroTitle" aria-label="影之刃零">影之刃零</h1>
+      <div class="hero-seal">武<br>典</div>
+    </div>
+    <div class="hero-en">PHANTOM BLADE ZERO　·　THE CODEX</div>
+    <p class="hero-sub">全流程 · 全收集 · 61 场首领图鉴 · 支线异闻 · 多结局 · 全成就</p>
+    <p class="hero-quote" id="heroQuote"></p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#mulu">入　阵 <span>↓</span></a>
+      <a class="btn-line" href="#jiejv">直看终局分支</a>
+    </div>
+    <div class="hero-stats" id="heroStats"></div>
+  </div>
+  <div class="hero-scroll"><span></span>下 卷</div>
+  <div class="hero-side">六十六天 · 一刃一江湖</div>
+</section>
+
+<!-- ============ 卷目 ============ -->
+<section class="sec sec-mulu" id="mulu">
+  <div class="sec-head reveal">
+    <div class="sec-index">卷 目</div>
+    <h2>九卷 · 一册通关</h2>
+    <p>从心法到终局，按卷索骥。每一卷都能勾选进度，行囊会自动记下你走到哪一步。</p>
+  </div>
+  <div class="mulu-grid" id="muluGrid"></div>
+</section>
+
+<!-- ============ 壹 心法 ============ -->
+<section class="sec" id="xinf">
+  <div class="sec-head reveal">
+    <div class="sec-index">壹 · 心法</div>
+    <h2>先懂杀气，再谈刀法</h2>
+    <p>这不是魂。没有跑尸、死亡不掉资源，Boss 二阶段失败直接从二阶段重开。它更像一套「武侠盾戳 + 资源循环」。</p>
+  </div>
+  <div class="mech-grid" id="mechGrid"></div>
+
+  <div class="subhead reveal"><span>三光诀</span><i>信号灯判定，是全局唯一的肌肉记忆</i></div>
+  <div class="signal-row" id="signalRow"></div>
+
+  <div class="subhead reveal"><span>难度四境</span><i>难度随时可切，且最低难度也能拿全成就与白金</i></div>
+  <div class="diff-tabs" id="diffTabs"></div>
+  <div class="diff-panel" id="diffPanel"></div>
+</section>
+
+<!-- ============ 贰 八境流程 ============ -->
+<section class="sec" id="liucheng">
+  <div class="sec-head reveal">
+    <div class="sec-index">贰 · 八境</div>
+    <h2>主线流程 · 按铃铛推进</h2>
+    <p>八张水墨箱庭无缝拼接，庞镇为枢纽。点开每一境，看主线目标、必做事项、推荐配装与本章陷阱。</p>
+  </div>
+  <div class="route-line" id="routeLine"></div>
+</section>
+
+<!-- ============ 叁 群雄谱 ============ -->
+<section class="sec" id="qunxiong">
+  <div class="sec-head reveal">
+    <div class="sec-index">叁 · 群雄谱</div>
+    <h2>群雄谱 · 61 场首领遭遇</h2>
+    <p>按遭遇顺序编号，主线、可选、隐藏、小首领与复战全部收录。其中 18 场重点战逐阶段拆解，其余 43 场给出该阶段推荐配装与机制要点；每场都列「主武器 / 影之武装 / 饰品 / 药瓶」。点编号前的圆圈标记已讨伐，自动计入行囊。</p>
+  </div>
+  <div class="toolbar reveal">
+    <div class="chips" id="bossRegionChips"></div>
+    <div class="search-wrap">
+      <span class="search-ico">⌕</span>
+      <input type="search" id="bossSearch" placeholder="搜编号 / 首领 / 英文名 / 掉落（按 / 聚焦）" autocomplete="off">
+    </div>
+  </div>
+  <div class="toolbar toolbar-2 reveal">
+    <span class="chip-label">类 别</span>
+    <div class="chips" id="bossCatChips"></div>
+    <div class="boss-count" id="bossCount"></div>
+  </div>
+  <div class="boss-list" id="bossList"></div>
+</section>
+
+<!-- ============ 肆 兵谱 ============ -->
+<section class="sec" id="bingpu">
+  <div class="sec-head reveal">
+    <div class="sec-index">肆 · 兵谱</div>
+    <h2>25 基础主武器 · 26 影之武装</h2>
+    <p>算上铸魂形态，图鉴总数 56 件（30 主武器 + 26 影之武装）；部分资料按 24 件影之武装统计。战斗可带 2 把主武器 + 2 件影之武装，切换主武器瞬间回满杀气；升级材料 10 级前全额退还，捡到什么试什么。</p>
+  </div>
+  <div class="toolbar reveal">
+    <div class="chips" id="weaponTabs"></div>
+    <div class="search-wrap">
+      <span class="search-ico">⌕</span>
+      <input type="search" id="weaponSearch" placeholder="搜武器名 / 区域 / 来源" autocomplete="off">
+    </div>
+  </div>
+  <div class="weapon-table" id="weaponTable"></div>
+  <div class="subhead reveal"><span>四套流派 · 按阶段换，不要一套穿到死</span></div>
+  <div class="build-grid" id="buildGrid"></div>
+</section>
+
+<!-- ============ 伍 全收集 ============ -->
+<section class="sec" id="shouji">
+  <div class="sec-head reveal">
+    <div class="sec-index">伍 · 藏锋录</div>
+    <h2>全收集 · 勾选自查</h2>
+    <p>收集品就是成长：黑石 +10% 伤害、杀气琥珀 +10% 杀气上限、记忆之花 提生命上限。按区域逐项核对，勾选状态保存在本机。</p>
+  </div>
+  <div class="collect-head reveal">
+    <div class="chips" id="collectTabs"></div>
+    <div class="collect-meter"><div class="meter-bar"><i id="collectBar"></i></div><b id="collectPct">0%</b></div>
+  </div>
+  <div class="collect-panel" id="collectPanel"></div>
+</section>
+
+<!-- ============ 陆 异闻支线 ============ -->
+<section class="sec" id="zhixian">
+  <div class="sec-head reveal">
+    <div class="sec-index">陆 · 异闻</div>
+    <h2>任务完成流程 · 11 条必清链</h2>
+    <p>全成就其实只由 11 条支线决定，与 100% 全收集不是一回事。紫色图标异闻更是真结局的硬前置，每条都标了截止点。</p>
+  </div>
+  <div class="quest-list" id="questList"></div>
+</section>
+
+<!-- ============ 柒 结局 ============ -->
+<section class="sec" id="jiejv">
+  <div class="sec-head reveal">
+    <div class="sec-index">柒 · 归途</div>
+    <h2>三结局 · 判定在冷荼战开打那一刻</h2>
+    <p>拨动下面两个开关，先看你会走到哪一条终局；再对照卡片抄一遍前置清单。</p>
+  </div>
+
+  <div class="ending-check reveal">
+    <div class="check-left">
+      <div class="check-title">终局自检器</div>
+      <label class="switch-row"><span><b>湖心秘密</b><i>完成并与虚空对话</i></span><input type="checkbox" id="swLake" checked><em class="switch"></em></label>
+      <label class="switch-row"><span><b>血脉觉醒</b><i>5 根龙柱试炼全胜</i></span><input type="checkbox" id="swPillar" checked><em class="switch"></em></label>
+      <p class="check-hint">结局锁定于与冷荼战斗开始之时，之后再补任务无效。</p>
+    </div>
+    <div class="check-result" id="checkResult"></div>
+  </div>
+
+  <div class="ending-flow reveal" id="endingFlow"></div>
+  <div class="ending-cards" id="endingCards"></div>
+</section>
+
+<!-- ============ 捌 奖杯 ============ -->
+<section class="sec" id="chengjiu">
+  <div class="sec-head reveal">
+    <div class="sec-index">捌 · 功名</div>
+    <h2>36 奖杯 · 一周目可白金</h2>
+    <p>1 白金 / 3 金 / 14 银 / 18 铜，其中多数为隐藏奖杯（媒体统计称 19 个，口径略有出入）。最低难度同样可全成就，卡关随时切「入阵者」不亏。</p>
+  </div>
+  <div class="toolbar reveal">
+    <div class="chips" id="trophyTabs"></div>
+    <div class="search-wrap">
+      <span class="search-ico">⌕</span>
+      <input type="search" id="trophySearch" placeholder="搜奖杯名 / 说明" autocomplete="off">
+    </div>
+  </div>
+  <div class="trophy-meter reveal"><div class="meter-bar"><i id="trophyBar"></i></div><b id="trophyPct">0 / 36</b></div>
+  <div class="trophy-grid" id="trophyGrid"></div>
+</section>
+
+<!-- ============ 玖 避坑 ============ -->
+<section class="sec" id="bikeng">
+  <div class="sec-head reveal">
+    <div class="sec-index">玖 · 避坑</div>
+    <h2>十九条不可逆 · 开荒前先读</h2>
+    <p>本章任务本章清；异变 / Boss / 关键对话前先手动存档；见到 NPC 先对话。顺序错一步，就得回档重打。</p>
+  </div>
+  <div class="warn-list" id="warnList"></div>
+  <div class="subhead reveal"><span>八条开荒诀要</span><i>资源管理比手速更重要</i></div>
+  <div class="tips-grid" id="tipsGrid"></div>
+</section>
+
+<!-- ============ 附 ============ -->
+<section class="sec sec-source" id="laiyuan">
+  <div class="sec-head reveal">
+    <div class="sec-index">附 · 出处</div>
+    <h2>来源与存疑</h2>
+  </div>
+  <div class="source-grid" id="sourceGrid"></div>
+  <div class="caveat" id="caveat"></div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="footer-seal">刃</div>
+  <div>
+    <b>影之刃零 · 武典</b>
+    <p>非官方攻略速查 · 整理于 2026-11-11 · 以游戏内图鉴与任务日志为准</p>
+    <p><a href="影之刃零攻略调研-20261029.html">发售夜调研存档</a> · <a href="#top">回到卷首 ↑</a></p>
+  </div>
+  <div class="footer-mark">六十六天</div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="回到卷首">↑</button>
+
+<script src="assets/data.js"></script>
+<script src="assets/bosses.js"></script>
+<script src="assets/app.js"></script>
 </body>
 </html>
