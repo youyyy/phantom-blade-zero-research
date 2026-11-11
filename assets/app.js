@@ -23,12 +23,14 @@
   const TROPHIES = D.trophies.length;
   const REGIONS = D.regions.length;
   const BOSSES = D.bosses.length;
-  const TOTAL = COLLECT + WEAPONS + TROPHIES + REGIONS + BOSSES;
+  const CODEX = (D.codex || []).length;
+  const TOTAL = COLLECT + WEAPONS + TROPHIES + REGIONS + BOSSES + CODEX;
   const collectKeys = () => D.regions.flatMap((r) => r.collect.map((c) => c.id));
   const weaponKeys = () => D.weapons.main.map((_, i) => "wm:" + i).concat(D.weapons.edges.map((_, i) => "we:" + i));
   const trophyKeys = () => D.trophies.map((_, i) => "t:" + i);
   const regionKeys = () => D.regions.map((r) => "region:" + r.id);
   const bossKeys = () => D.bosses.map((b) => "boss:" + b.id);
+  const codexKeys = () => (D.codex || []).map((c) => "codex:" + c.no);
   const counted = (keys) => keys.filter(isOn).length;
 
   function moduleStats() {
@@ -38,6 +40,7 @@
       { n: "兵谱", v: counted(weaponKeys()), m: WEAPONS },
       { n: "奖杯", v: counted(trophyKeys()), m: TROPHIES },
       { n: "群雄讨伐", v: counted(bossKeys()), m: BOSSES },
+      { n: "首领录", v: counted(codexKeys()), m: CODEX },
     ];
   }
   function totalPct() {
@@ -115,15 +118,16 @@
 
   /* ---------------- 卷目 ---------------- */
   const MULU = [
-    { no: "壹", t: "心法 · 底层武理", d: "杀气、三光诀、难度四境", m: "4 诀 / 3 光 / 4 境", h: "#xinf" },
+    { no: "壹", t: "心法 · 底层武理", d: "杀气、三色信号光、难度四境", m: "4 诀 / 3 光 / 4 境", h: "#xinf" },
     { no: "贰", t: "八境 · 主线流程", d: "按铃铛推进的八章路线与必做事项", m: "8 境 · 可勾选", h: "#liucheng" },
-    { no: "叁", t: "群雄 · Boss 打法", d: "61 场遭遇 · 18 场逐阶段拆解 + 43 场简目配装", m: D.bosses.length + " 场 · 可勾选", h: "#qunxiong" },
-    { no: "肆", t: "兵谱 · 全武器", d: "25 基础主武器、26 影之武装与四套流派", m: WEAPONS + " 件 · 4 流派", h: "#bingpu" },
+    { no: "叁", t: "群雄 · Boss 打法", d: "75 条游戏内战绩 + 61 场遭遇 · 18 场逐阶段拆解", m: CODEX + " 条 / " + BOSSES + " 场", h: "#qunxiong" },
+    { no: "肆", t: "兵谱 · 全武器", d: "25 主武器、25 影之武装与四套流派", m: WEAPONS + " 件 · 4 流派", h: "#bingpu" },
     { no: "伍", t: "藏锋 · 全收集", d: "记忆之花、黑石、琥珀、面具、龙柱", m: COLLECT + " 项可勾选", h: "#shouji" },
     { no: "陆", t: "异闻 · 任务链", d: "11 条成就 / 真结局相关支线与截止点", m: D.quests.length + " 条长链", h: "#zhixian" },
     { no: "柒", t: "归途 · 多结局", d: "三结局条件、分支自检器与终局路线", m: "3 结局", h: "#jiejv" },
     { no: "捌", t: "功名 · 全成就", d: "36 奖杯筛选、勾选与白金进度", m: TROPHIES + " 杯", h: "#chengjiu" },
     { no: "玖", t: "避坑 · 不可逆", d: "十九条血泪警示 + 八条开荒诀要", m: D.warnings.length + " 警示", h: "#bikeng" },
+    { no: "拾", t: "术语 · 中英口径", d: "装备栏位、资源、动作、难度官方用词与待核译名", m: D.glossary.reduce((a, g) => a + g.rows.length, 0) + " 条对照", h: "#shuyu" },
   ];
   function renderMulu() {
     $("#muluGrid").innerHTML = MULU.map((m) =>
@@ -161,7 +165,7 @@
   }
 
   /* ---------------- 折叠面板通用 ---------------- */
-  const openSets = { route: new Set(), boss: new Set(), quest: new Set(), warn: new Set() };
+  const openSets = { route: new Set(), boss: new Set(), codex: new Set(), quest: new Set(), warn: new Set() };
   function bindAccordion(rootSel, itemSel, headSel, bodySel, group, idAttr, ignore) {
     const root = $(rootSel);
     if (!root) return;
@@ -188,7 +192,7 @@
     });
   }
   function syncOpenHeights() {
-    $$(".route-item.open .route-body,.boss-card.open .boss-body,.quest-card.open .quest-body,.warn-item.open .warn-body")
+    $$(".route-item.open .route-body,.boss-card.open .boss-body,.codex-card.open .codex-body,.quest-card.open .quest-body,.warn-item.open .warn-body")
       .forEach((b) => { b.style.maxHeight = b.scrollHeight + "px"; });
   }
 
@@ -255,7 +259,7 @@
       const k = "boss:" + b.id, on = isOn(k);
       const kindCls = b.cat === "可选" || b.cat === "隐藏" ? "side" : (b.cat === "复战" || b.no >= 58 ? "warn" : "");
       const tier = b.detail === "full" ? "详解" : "简目";
-      return `<article class="boss-card reveal${on ? " done" : ""}" data-bid="${b.id}" style="--d:${Math.min(i, 8) * 35}ms">
+      return `<article class="boss-card reveal${on ? " done" : ""}" data-bid="${b.id}" data-bno="${b.no}" style="--d:${Math.min(i, 8) * 35}ms">
         <button class="boss-head" type="button">
           <span class="boss-ck${on ? " on" : ""}" data-bk="${esc(k)}" role="checkbox" tabindex="0" aria-checked="${on}" title="标记已讨伐"></span>
           <span class="boss-idx">${String(b.no).padStart(2, "0")}</span>
@@ -308,6 +312,111 @@
       if (ck && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); ck.click(); }
     });
     bindAccordion("#bossList", ".boss-card", ".boss-head", ".boss-body", "boss", "bid", ".boss-ck");
+  }
+
+  /* ---------------- 叁·附 首领录：游戏内 75 条 BOSS 战绩 ---------------- */
+  const CODEX_CATS = ["全部", "主线", "可选", "隐藏", "形态", "剧情战"];
+  let bossView = "codex", codexChapter = "全部", codexCat = "全部", codexQuery = "";
+  const pad2 = (n) => String(n).padStart(2, "0");
+  const codexChapterList = () => ["全部"].concat([...new Set((D.codex || []).map((c) => c.ch))]);
+
+  function updateCodexCount(list) {
+    const el = $("#codexCount");
+    if (el) el.innerHTML = `显示 <b>${list.length}</b> / ${CODEX} 条　·　已收录 <b>${counted(codexKeys())}</b>`;
+  }
+  function renderCodex() {
+    if (!CODEX || !$("#codexList")) return;
+    $("#codexChapterChips").innerHTML = codexChapterList().map((c) =>
+      `<button class="chip${codexChapter === c ? " on" : ""}" data-cc="${esc(c)}">${esc(c)}</button>`
+    ).join("");
+    $("#codexCatChips").innerHTML = CODEX_CATS.map((c) =>
+      `<button class="chip${codexCat === c ? " on" : ""}" data-cx="${esc(c)}">${esc(c)}${c === "全部" ? "" : " <i>" + D.codex.filter((x) => x.cat === c).length + "</i>"}</button>`
+    ).join("");
+    const q = codexQuery.trim().toLowerCase();
+    const list = D.codex.filter((c) => {
+      const hay = c.no + c.name + c.en + c.ch + c.cat + c.drop + c.note + c.lv + c.link.join("");
+      return (codexChapter === "全部" || c.ch === codexChapter) &&
+        (codexCat === "全部" || c.cat === codexCat) &&
+        (!q || hay.toLowerCase().indexOf(q) >= 0);
+    });
+    updateCodexCount(list);
+    $("#codexList").innerHTML = list.length ? list.map((c, i) => {
+      const k = "codex:" + c.no, on = isOn(k);
+      const cls = c.cat === "隐藏" || c.cat === "形态" ? "side" : (c.cat === "剧情战" ? "" : "warn");
+      return `<article class="codex-card reveal${on ? " done" : ""}" data-cid="${c.no}" style="--d:${Math.min(i, 8) * 35}ms">
+        <button class="codex-head" type="button">
+          <span class="boss-ck codex-ck${on ? " on" : ""}" data-ck="${esc(k)}" role="checkbox" tabindex="0" aria-checked="${on}" title="标记已收录"></span>
+          <span class="codex-idx">${pad2(c.no)}</span>
+          <span class="codex-name">${esc(c.name)}<small>${esc(c.en)}</small></span>
+          <span class="codex-ch">${esc(c.ch)}</span>
+          <span class="codex-badge ${cls}">${esc(c.cat)}</span>
+          <span class="codex-drop">◈ ${esc(c.drop || "—")}</span>
+          <span class="boss-chev">⌄</span>
+        </button>
+        <div class="codex-body"><div class="codex-inner">
+          <div class="codex-facts">
+            <div><em>等级</em><span>${esc(c.lv || "—")}</span></div>
+            <div><em>破局者 HP</em><span>${esc(c.hp || "—")}</span></div>
+            <div><em>残尘</em><span>${esc(c.dust || "—")}</span></div>
+            <div><em>掉落</em><span>${esc(c.drop || "—")}</span></div>
+          </div>
+          ${c.note ? `<p class="codex-note">${esc(c.note)}</p>` : ""}
+          <div class="codex-links"><span>对应遭遇</span>${c.link.map((n) =>
+            `<button class="jump-btn" type="button" data-jump="${n}">第 ${pad2(n)} 场 · 查看配装 ↗</button>`
+          ).join("")}</div>
+        </div></div>
+      </article>`;
+    }).join("") : `<div class="empty">没有匹配的首领，换个词试试。</div>`;
+    restoreOpen("#codexList", ".codex-card", ".codex-body", "codex", "cid");
+  }
+  function jumpToEncounter(no) {
+    setBossView("encounter");
+    bossRegion = "全部"; bossCat = "全部"; bossQuery = "";
+    const s = $("#bossSearch"); if (s) s.value = "";
+    renderBosses(); watch();
+    const card = $('#bossList .boss-card[data-bno="' + no + '"]');
+    if (!card) return;
+    if (!card.classList.contains("open")) card.querySelector(".boss-head").click();
+    setTimeout(() => card.scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" }), 90);
+  }
+  function setBossView(v) {
+    bossView = v;
+    $$("#bossViewSwitch .vs-btn").forEach((b) => b.classList.toggle("on", b.dataset.bv === v));
+    const ev = $("#bossEncounterView"), cv = $("#bossCodexView");
+    if (ev) ev.hidden = v !== "encounter";
+    if (cv) cv.hidden = v !== "codex";
+    if (v === "codex") renderCodex();
+    else { renderBosses(); syncOpenHeights(); }
+    watch();
+  }
+  function initCodexFilters() {
+    $("#bossViewSwitch").addEventListener("click", (e) => {
+      const b = e.target.closest("[data-bv]"); if (b) setBossView(b.dataset.bv);
+    });
+    $("#codexChapterChips").addEventListener("click", (e) => {
+      const b = e.target.closest("[data-cc]"); if (!b) return;
+      codexChapter = b.dataset.cc; renderCodex(); watch();
+    });
+    $("#codexCatChips").addEventListener("click", (e) => {
+      const b = e.target.closest("[data-cx]"); if (!b) return;
+      codexCat = b.dataset.cx; renderCodex(); watch();
+    });
+    $("#codexSearch").addEventListener("input", (e) => { codexQuery = e.target.value; renderCodex(); watch(); });
+    $("#codexList").addEventListener("click", (e) => {
+      const j = e.target.closest("[data-jump]");
+      if (j) { e.stopPropagation(); jumpToEncounter(+j.dataset.jump); return; }
+      const ck = e.target.closest(".codex-ck"); if (!ck) return;
+      e.preventDefault(); e.stopPropagation();
+      const on = toggle(ck.dataset.ck);
+      ck.classList.toggle("on", on); ck.setAttribute("aria-checked", String(on));
+      const card = ck.closest(".codex-card"); if (card) card.classList.toggle("done", on);
+      updateCodexCount($$("#codexList .codex-card"));
+    }, true);
+    $("#codexList").addEventListener("keydown", (e) => {
+      const ck = e.target.closest(".codex-ck");
+      if (ck && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); ck.click(); }
+    });
+    bindAccordion("#codexList", ".codex-card", ".codex-head", ".codex-body", "codex", "cid", ".codex-ck,[data-jump]");
   }
 
   /* ---------------- 肆 兵谱 ---------------- */
@@ -485,6 +594,23 @@
     ).join("");
   }
 
+  /* ---------------- 拾 术语与口径 ---------------- */
+  function renderGlossary() {
+    $("#glossary").innerHTML = D.glossary.map((g, gi) => `
+      <div class="gl-group reveal" style="--d:${gi * 55}ms">
+        <div class="gl-title"><span>${String(gi + 1).padStart(2, "0")}</span>${esc(g.g)}</div>
+        <div class="gl-rows">${g.rows.map((r) => `
+          <div class="gl-row">
+            <div class="gl-cn">${esc(r.cn)}<i>${esc(r.en)}</i></div>
+            <div class="gl-note">${esc(r.note)}</div>
+          </div>`).join("")}</div>
+      </div>`).join("");
+    $("#termFixed").innerHTML = D.termNotes.fixed.map((t, i) =>
+      `<div class="term-item reveal" style="--d:${i * 45}ms"><b>${String(i + 1).padStart(2, "0")}</b><p>${esc(t)}</p></div>`).join("");
+    $("#termPending").innerHTML = D.termNotes.pending.map((t, i) =>
+      `<div class="term-item reveal" style="--d:${i * 45}ms"><b>?</b><p>${esc(t)}</p></div>`).join("");
+  }
+
   /* ---------------- 附 ---------------- */
   function renderSources() {
     $("#sourceGrid").innerHTML = D.sources.map((s) => {
@@ -498,7 +624,7 @@
   function initScroll() {
     const bar = $("#scrollProgress"), top = $("#topbar"), toTop = $("#toTop");
     const layers = $$(".hero-art .layer");
-    const ids = ["xinf", "liucheng", "qunxiong", "bingpu", "shouji", "zhixian", "jiejv", "chengjiu", "bikeng", "laiyuan"];
+    const ids = ["xinf", "liucheng", "qunxiong", "bingpu", "shouji", "zhixian", "jiejv", "chengjiu", "bikeng", "shuyu", "laiyuan"];
     let ticking = false;
     const onScroll = () => {
       const y = window.scrollY, h = document.documentElement.scrollHeight - window.innerHeight;
@@ -528,7 +654,7 @@
     $("#resetProgress").addEventListener("click", () => {
       if (!confirm("确定清空全部勾选进度？此操作不可撤销。")) return;
       state = {}; save(); refreshProgress();
-      renderRoutes(); renderWeapons(); renderCollect(); renderTrophies(); renderBosses();
+      renderRoutes(); renderWeapons(); renderCollect(); renderTrophies(); renderBosses(); renderCodex();
       watch();
     });
     return { close, isOpen: () => d.classList.contains("open") };
@@ -549,7 +675,7 @@
       if (e.key === "Escape") { drawer.close(); if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); }
       if (e.key === "/" && !/input|textarea/i.test(document.activeElement.tagName)) {
         e.preventDefault();
-        const inputs = ["#bossSearch", "#weaponSearch", "#trophySearch"].map($).filter(Boolean);
+        const inputs = [bossView === "codex" ? "#codexSearch" : "#bossSearch", "#weaponSearch", "#trophySearch"].map($).filter(Boolean);
         const target = inputs.find((i) => i.getBoundingClientRect().top > -100) || inputs[0];
         if (target) { target.focus(); target.scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" }); }
       }
@@ -569,10 +695,10 @@
   function boot() {
     setHeroViewBox();
     initOpening();
-    renderMulu(); renderMechanics(); renderRoutes(); initRoutes(); renderBosses(); initBossFilters();
+    renderMulu(); renderMechanics(); renderRoutes(); initRoutes(); renderBosses(); initBossFilters(); initCodexFilters(); setBossView("codex");
     renderWeapons(); renderBuilds(); initWeaponFilters();
     renderCollect(); initCollect(); renderQuests(); initEndings();
-    renderTrophies(); initTrophies(); renderWarnings(); renderSources();
+    renderTrophies(); initTrophies(); renderWarnings(); renderGlossary(); renderSources();
     refreshProgress();
     const drawer = initDrawer();
     initScroll(); initMisc(drawer); watch();

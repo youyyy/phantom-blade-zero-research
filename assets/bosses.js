@@ -104,14 +104,14 @@
   {
     "no": 1,
     "id": "s01",
-    "name": "左殇 · 序章",
+    "name": "「组织」冥主：左殇（序章）",
     "en": "Zuo Shang, The Order's Shadow Sovereign",
     "region": "序章",
     "place": "序章 · 无常（无铃铛）",
     "kind": "主线",
     "cat": "主线",
     "drop": "无（剧情战）",
-    "intro": "序章教学战，胜负由剧情固定，用来熟悉三光诀与杀气循环。",
+    "intro": "序章教学战，胜负由剧情固定，用来熟悉三色信号光与杀气循环。",
     "detail": "brief",
     "phases": [
       {
@@ -122,7 +122,7 @@
         "flask": "药葫芦 / 凝锋丹",
         "moves": [
           "蓝光点按格挡、红光最后一刻闪避，黑光只能闪",
-          "跟着屏幕提示做完美精防与鬼步绕背",
+          "跟着屏幕提示做完美格挡与鬼步绕背",
           "两把主武器互切回满杀气，别把黄槽甩干"
         ],
         "tip": "这一战不产出装备、不消耗不可逆资源，打完直接进第一章。"
@@ -132,7 +132,7 @@
   {
     "no": 2,
     "id": "s02",
-    "name": "「组织」猎杀者 · 追命（序章）",
+    "name": "「组织」猎杀者：追命（序章）",
     "en": "The Hunt, Hunter Of The Order (1)",
     "region": "序章",
     "place": "序章 · 无常（无铃铛）",
@@ -188,7 +188,7 @@
   {
     "no": 8,
     "id": "s08",
-    "name": "金面具黑衣人 ①",
+    "name": "金面人 · 龙柱试炼 ①",
     "en": "The Gold-Masked One (1)",
     "region": "悲泣溪谷",
     "place": "悲泣溪谷龙柱 · 试炼 ①",
@@ -216,7 +216,7 @@
   {
     "no": 11,
     "id": "s11",
-    "name": "拳痴 · 铁狂",
+    "name": "拳痴：铁狂",
     "en": "Stone Hand Iron Fever",
     "region": "血色森林",
     "place": "镜林入口 · 拳痴",
@@ -234,7 +234,7 @@
         "flask": "凝锋丹",
         "moves": [
           "贴身快拳连段多，等一套收招再反击",
-          "蓝光点格挡做完美精防，红光抓技闪开",
+          "蓝光点格挡做完美格挡，红光抓技闪开",
           "破防后轻 3 + 重 2 收手，不贪第二套"
         ],
         "tip": "掉铁拳套，人偶与破盾场景都用得上；打完别忘镜林「发出哭声的镜子」解谜。"
@@ -244,13 +244,13 @@
   {
     "no": 12,
     "id": "s12",
-    "name": "金面具黑衣人 ②",
+    "name": "金面人 · 龙柱试炼 ②",
     "en": "The Gold-Masked One (2)",
     "region": "血色森林",
     "place": "镜林龙柱 · 试炼 ②",
     "kind": "可选",
     "cat": "可选",
-    "drop": "奇迹剑鞘 / 神奇刀鞘",
+    "drop": "神奇刀鞘",
     "intro": "龙柱第二场，招式比第一柱更连贯，注意连续红光。",
     "detail": "brief",
     "phases": [
@@ -265,14 +265,14 @@
           "连续红光要连闪，硬挡直接被清杀气",
           "留绝技收掉最后一波"
         ],
-        "tip": "奖励奇迹剑鞘；旁边另有神奇刀鞘饰品，一并捡走。"
+        "tip": "奖励神奇刀鞘；旁边另有神奇刀鞘饰品，一并捡走。"
       }
     ]
   },
   {
     "no": 14,
     "id": "s14",
-    "name": "混沌魔偶 · 玉琮",
+    "name": "卅四号·混沌魔偶：「玉琮」",
     "en": "Yucong, No. 34 Twisted Puppet",
     "region": "血色森林",
     "place": "丝线缠绕的巨树 · 回图",
@@ -300,7 +300,7 @@
   {
     "no": 16,
     "id": "s16",
-    "name": "天玄派 · 毕远掌门残躯",
+    "name": "天玄派：毕远掌门残躯",
     "en": "Master Bi Yuan Of The Tianxuan Sect",
     "region": "陆家村",
     "place": "兰公子藏身处 · 天玄派",
@@ -328,10 +328,10 @@
   {
     "no": 17,
     "id": "s17",
-    "name": "苦叶寺 · 碧海大师残躯",
+    "name": "苦叶寺：碧海大师残躯",
     "en": "Master Bi Hai Of Kuye Temple",
     "region": "陆家村",
-    "place": "枯叶寺",
+    "place": "苦叶寺",
     "kind": "主线",
     "cat": "主线",
     "drop": "苦叶寺珠串",
@@ -356,7 +356,7 @@
   {
     "no": 19,
     "id": "s19",
-    "name": "灭法之法 · 炎茹",
+    "name": "灭法之法：炎茹",
     "en": "Acolyte Yanru",
     "region": "陆家村",
     "place": "露台",
@@ -384,7 +384,7 @@
   {
     "no": 20,
     "id": "s20",
-    "name": "三号乐偶师 · 玉瓒",
+    "name": "三号·乐师偶：「玉瓒」",
     "en": "Yuzan, No. 3 Musician Puppet",
     "region": "陆家村",
     "place": "井底",
@@ -412,7 +412,7 @@
   {
     "no": 23,
     "id": "s23",
-    "name": "鬼差高手 · 斩骑",
+    "name": "鬼差高手：斩骑",
     "en": "Cavalrybane, Elite Shadow Warden",
     "region": "庞镇",
     "place": "藏经阁岔路",
@@ -440,7 +440,7 @@
   {
     "no": 24,
     "id": "s24",
-    "name": "堕落将军 · 武轩",
+    "name": "堕落将军：武轩",
     "en": "Wu Xuan, The Fallen General",
     "region": "庞镇",
     "place": "后街牌坊",
@@ -468,7 +468,7 @@
   {
     "no": 25,
     "id": "s25",
-    "name": "女妖 · 骨婉约",
+    "name": "女妖骨婉约",
     "en": "Gu Wanyue, The Wailing Wraith",
     "region": "庞镇",
     "place": "余音塘",
@@ -496,13 +496,13 @@
   {
     "no": 26,
     "id": "s26",
-    "name": "神医 · 谢秋冬",
+    "name": "神医：谢秋冬",
     "en": "Xie Qiudong, The Divine Healer",
     "region": "庞镇",
     "place": "韦三川井",
     "kind": "主线",
     "cat": "主线",
-    "drop": "不竭（影之武装）",
+    "drop": "不尽水（秘药）",
     "intro": "治疗续航型首领，拖久了会被它把节奏磨没。",
     "detail": "brief",
     "phases": [
@@ -524,7 +524,7 @@
   {
     "no": 27,
     "id": "s27",
-    "name": "水行帮主 · 游龙",
+    "name": "水行帮主：游龙",
     "en": "You Loong, Leader Of The Blackwater Crew",
     "region": "庞镇",
     "place": "青蛇馆",
@@ -552,7 +552,7 @@
   {
     "no": 30,
     "id": "s30",
-    "name": "灭法之法 · 雷婷",
+    "name": "灭法之法：雷婷",
     "en": "Acolyte Lei Ting",
     "region": "庞镇",
     "place": "艮老翁宅",
@@ -580,7 +580,7 @@
   {
     "no": 31,
     "id": "s31",
-    "name": "鬼差高手 · 勾魂",
+    "name": "鬼差高手：勾魂",
     "en": "Soulclaimer, Elite Shadow Warden",
     "region": "庞镇",
     "place": "码头仓库",
@@ -664,7 +664,7 @@
   {
     "no": 35,
     "id": "s35",
-    "name": "七星剑阵 · 大师兄",
+    "name": "七星剑阵：大师兄",
     "en": "Chief Disciple Of The Seven-Stars Formation",
     "region": "正道大营",
     "place": "三塔",
@@ -692,7 +692,7 @@
   {
     "no": 36,
     "id": "s36",
-    "name": "软剑 · 乌冷霜",
+    "name": "软剑：乌冷霜",
     "en": "Wu Lengshuang, The Soft Sword",
     "region": "正道大营",
     "place": "禁闭处",
@@ -720,7 +720,7 @@
   {
     "no": 37,
     "id": "s37",
-    "name": "廿一号剑偶 · 玉璧",
+    "name": "廿一号·剑偶：「玉璧」",
     "en": "Yubi, No. 21 Swordfighter Puppet",
     "region": "正道大营",
     "place": "演武场",
@@ -748,7 +748,7 @@
   {
     "no": 38,
     "id": "s38",
-    "name": "火刀 · 祝原",
+    "name": "火刀：祝原",
     "en": "Zhu Yuan, The Searing Blade",
     "region": "庞镇",
     "place": "庞镇杀气塔熔炉",
@@ -776,7 +776,7 @@
   {
     "no": 40,
     "id": "s40",
-    "name": "灭法之法 · 蛊鹤",
+    "name": "灭法之法：蛊鹤",
     "en": "Acolyte Guhe",
     "region": "梅谷湖",
     "place": "梅谷村东渡口",
@@ -832,7 +832,7 @@
   {
     "no": 42,
     "id": "s42",
-    "name": "金面具黑衣人 ③",
+    "name": "金面人 · 龙柱试炼 ③",
     "en": "The Gold-Masked One (3)",
     "region": "梅谷湖",
     "place": "湖心龙柱渡口 · 试炼 ③",
@@ -888,7 +888,7 @@
   {
     "no": 44,
     "id": "s44",
-    "name": "鬼差高手 · 断肠",
+    "name": "鬼差高手：断肠",
     "en": "Heartpiercer, Elite Shadow Warden",
     "region": "梅谷湖",
     "place": "白蛇馆",
@@ -916,7 +916,7 @@
   {
     "no": 45,
     "id": "s45",
-    "name": "发狂的水行帮主 · 游龙",
+    "name": "发狂的水行帮主：游龙",
     "en": "You Loong, The Frenzied Blackwater Crew Leader",
     "region": "梅谷湖",
     "place": "黑水帮渡口 · 二番战",
@@ -944,7 +944,7 @@
   {
     "no": 46,
     "id": "s46",
-    "name": "癫狂暴徒 · 铁杀",
+    "name": "癫狂暴徒：铁杀",
     "en": "Iron Butcher, The Frenzied Brute",
     "region": "枷笼山",
     "place": "夫人之径",
@@ -972,7 +972,7 @@
   {
     "no": 47,
     "id": "s47",
-    "name": "横刀 · 毕峰",
+    "name": "横刀：毕峰",
     "en": "Bi Feng, Giant Saber Commander",
     "region": "枷笼山",
     "place": "岩洞通道",
@@ -1000,7 +1000,7 @@
   {
     "no": 48,
     "id": "s48",
-    "name": "疯婆子 · 奎艳艳",
+    "name": "疯婆子奎艳艳",
     "en": "Kui Yanyan, The Deranged",
     "region": "枷笼山",
     "place": "祠外门",
@@ -1056,7 +1056,7 @@
   {
     "no": 50,
     "id": "s50",
-    "name": "昆仑叛教者 · 荒行子",
+    "name": "昆仑叛教者：荒行子",
     "en": "Huangxing, The Kunlun Renegade",
     "region": "枷笼山",
     "place": "夫人祠 · 旋刑形态",
@@ -1084,7 +1084,7 @@
   {
     "no": 51,
     "id": "s51",
-    "name": "活人偶清道夫 & 灭法之法 · 寒岁",
+    "name": "活人偶清道夫 & 灭法之法：寒岁",
     "en": "The Puppet Scavenger & Acolyte Hansui",
     "region": "悲泣溪谷",
     "place": "溪谷红房子 · 后期回图",
@@ -1112,7 +1112,7 @@
   {
     "no": 52,
     "id": "s52",
-    "name": "金面具黑衣人 ④",
+    "name": "金面人 · 龙柱试炼 ④",
     "en": "The Gold-Masked One (4)",
     "region": "梅谷湖",
     "place": "幻术师遗迹 · 第三铃铛 · 试炼 ④",
@@ -1140,7 +1140,7 @@
   {
     "no": 54,
     "id": "s54",
-    "name": "赤影骨力 · 囚锋",
+    "name": "赤影骨刃：囚锋",
     "en": "Qiu Feng, The Crimson Boneblade",
     "region": "戏梦山庄",
     "place": "灵堂",
@@ -1168,7 +1168,7 @@
   {
     "no": 55,
     "id": "s55",
-    "name": "十二号偃月刀偶 · 玉鼎",
+    "name": "十二号·偃月刀偶：「玉鼎」",
     "en": "Yuding, No. 12 Crescent Blade Puppet",
     "region": "戏梦山庄",
     "place": "演武场",
@@ -1196,7 +1196,7 @@
   {
     "no": 56,
     "id": "s56",
-    "name": "暗魔天堡之主 · 魔渊",
+    "name": "暗魔天堡之主：魔渊",
     "en": "Mo Yuan, Leader Of The Bastion Of Mo",
     "region": "戏梦山庄",
     "place": "山庄龙柱 · 隐藏战",
@@ -1224,7 +1224,7 @@
   {
     "no": 57,
     "id": "s57",
-    "name": "人使 · 雷当",
+    "name": "「虎炮」：雷当",
     "en": "Lei Dang, The Tiger Cannon",
     "region": "戏梦山庄",
     "place": "完美容器池",
@@ -1254,7 +1254,7 @@
     "id": "s58",
     "name": "力者与锯者",
     "en": "The Crusher And The Saw",
-    "region": "魂断山",
+    "region": "断魂山",
     "place": "巨人之巢",
     "kind": "主线",
     "cat": "主线",
@@ -1280,14 +1280,14 @@
   {
     "no": 60,
     "id": "s60",
-    "name": "梦差 & 圣母娘娘",
+    "name": "救苦救难梦华圣母娘娘",
     "en": "Meng Hua, The Merciful Lady Of The Blossom Veil",
-    "region": "魂断山",
-    "place": "魂断崖",
+    "region": "断魂山",
+    "place": "断魂崖",
     "kind": "主线",
     "cat": "主线",
     "drop": "圣母邪扇 / 夫人冠 / 帷帽余缕",
-    "intro": "帷帽使者的后续形态，扇与幻术混合，真结局线追加阶段。",
+    "intro": "梦差：冷荼之后的终局形态，扇与幻术混合，真结局线追加阶段。",
     "detail": "brief",
     "phases": [
       {

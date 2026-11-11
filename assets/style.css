@@ -355,7 +355,7 @@ button{cursor:pointer;border:0;background:none;color:inherit}
   color:var(--paper);font-size:.82rem;outline:none;transition:border-color .3s,box-shadow .3s;
 }
 .search-wrap input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(178,58,44,.12)}
-.search-wrap input::placeholder{color:var(--muted)}
+.search-wrap input::placeholder{color:rgba(236,227,208,.46)}
 .search-ico{position:absolute;left:11px;color:var(--muted);font-size:1.1rem;pointer-events:none}
 
 /* 八境时间线 */
@@ -439,6 +439,51 @@ button{cursor:pointer;border:0;background:none;color:inherit}
 .phase li{font-size:.8rem;color:var(--dim);line-height:1.8;padding-left:14px;position:relative;margin-bottom:5px}
 .phase li::before{content:"—";position:absolute;left:0;color:var(--red);font-size:.7em}
 .phase-tip{margin-top:14px;font-size:.78rem;color:var(--paper-2);background:rgba(178,58,44,.08);padding:9px 12px;line-height:1.75}
+
+/* 群雄谱：口径切换 + 首领录（游戏内 75 条战绩） */
+[hidden]{display:none!important}
+.view-switch{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.vs-btn{
+  display:flex;flex-direction:column;gap:5px;min-width:210px;padding:13px 20px;text-align:left;
+  border:1px solid var(--line);background:linear-gradient(140deg,rgba(23,29,34,.72),rgba(11,14,17,.55));
+  position:relative;overflow:hidden;transition:.32s var(--ease);
+}
+.vs-btn::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.vs-btn b{font-size:.98rem;font-weight:600;letter-spacing:.08em;color:var(--paper-2)}
+.vs-btn i{font-style:normal;font-size:.71rem;color:var(--muted);letter-spacing:.06em}
+.vs-btn:hover{border-color:rgba(176,141,85,.6);transform:translateY(-2px)}
+.vs-btn.on{border-color:rgba(178,58,44,.6);background:linear-gradient(140deg,rgba(124,36,27,.28),rgba(11,14,17,.55));box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.vs-btn.on::after{transform:scaleX(1)}
+.vs-btn.on b{color:var(--gold-hi)}
+.vs-btn.on i{color:var(--dim)}
+.vs-note{font-size:.72rem;color:var(--muted);align-self:center;margin-left:auto;letter-spacing:.05em}
+
+.codex-list{display:flex;flex-direction:column;gap:9px}
+.codex-card{border:1px solid var(--line);background:linear-gradient(140deg,rgba(23,29,34,.6),rgba(11,14,17,.5));transition:border-color .35s,box-shadow .35s,opacity .35s}
+.codex-card:hover{border-color:rgba(176,141,85,.4)}
+.codex-card.open{border-color:rgba(178,58,44,.5);box-shadow:0 12px 34px rgba(0,0,0,.3)}
+.codex-card.done{opacity:.62;border-color:rgba(95,133,115,.3)}
+.codex-card.done.open{opacity:1}
+.codex-head{display:flex;align-items:center;gap:14px;width:100%;padding:13px 20px;text-align:left;cursor:pointer}
+.codex-idx{font-size:.7rem;color:var(--muted);min-width:28px;letter-spacing:.1em}
+.codex-card.done .codex-idx{color:var(--red-hi)}
+.codex-name{font-size:.98rem;font-weight:600;letter-spacing:.05em;flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.codex-name small{font-size:.66rem;font-weight:400;color:var(--muted);letter-spacing:.04em;font-family:var(--sans);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.codex-ch{font-size:.72rem;color:var(--dim);white-space:nowrap;min-width:64px}
+.codex-badge{font-size:.66rem;padding:3px 8px;border:1px solid var(--line);color:var(--dim);white-space:nowrap}
+.codex-badge.warn{border-color:rgba(178,58,44,.55);color:var(--red-hi);background:rgba(178,58,44,.07)}
+.codex-badge.side{border-color:rgba(95,133,115,.5);color:#8ab3a0}
+.codex-drop{font-size:.72rem;color:var(--gold);max-width:210px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.codex-body{max-height:0;overflow:hidden;transition:max-height .5s var(--ease)}
+.codex-inner{padding:0 20px 20px;border-top:1px solid var(--line-2)}
+.codex-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:16px}
+.codex-facts>div{border:1px solid var(--line);background:rgba(11,14,17,.5);padding:10px 12px;display:flex;gap:10px;align-items:baseline;min-width:0}
+.codex-facts em{font-style:normal;font-size:.7rem;color:var(--muted);letter-spacing:.08em;min-width:66px;flex-shrink:0}
+.codex-facts span{font-size:.79rem;color:var(--paper-2);line-height:1.6;word-break:break-word}
+.codex-note{font-size:.78rem;color:var(--dim);line-height:1.8;margin-top:14px;padding:9px 12px;border-left:2px solid var(--red);background:rgba(178,58,44,.07)}
+.codex-links{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:16px;font-size:.74rem;color:var(--muted)}
+.jump-btn{font-size:.72rem;padding:6px 11px;border:1px solid rgba(176,141,85,.45);color:var(--gold-hi);background:rgba(176,141,85,.06);transition:.25s var(--ease);white-space:nowrap}
+.jump-btn:hover{border-color:var(--red);color:#fff;background:rgba(124,36,27,.4)}
 .empty{padding:46px;text-align:center;color:var(--muted);border:1px dashed var(--line);font-size:.9rem}
 
 /* 兵谱 */
@@ -590,6 +635,24 @@ button{cursor:pointer;border:0;background:none;color:inherit}
 .tip-card span{font-family:var(--brush);font-size:1.6rem;color:rgba(176,141,85,.55);line-height:1.1}
 .tip-card p{font-size:.83rem;color:var(--dim);line-height:1.85}
 
+/* 拾 · 术语与口径 */
+.glossary{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.gl-group{border:1px solid var(--line);background:rgba(17,22,27,.55)}
+.gl-title{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);font-family:var(--serif);font-size:1rem;letter-spacing:.12em;color:var(--paper)}
+.gl-title span{flex-shrink:0;font-family:var(--sans);font-size:.66rem;color:var(--red-hi);letter-spacing:.1em;border:1px solid rgba(178,58,44,.5);padding:2px 6px}
+.gl-rows{padding:4px 18px 12px}
+.gl-row{display:grid;grid-template-columns:168px 1fr;gap:16px;padding:11px 0;border-bottom:1px dashed var(--line-2)}
+.gl-row:last-child{border-bottom:0}
+.gl-cn{font-size:.88rem;color:var(--gold-hi);line-height:1.6;font-weight:600}
+.gl-cn i{display:block;font-style:normal;font-family:var(--sans);font-size:.66rem;color:var(--muted);letter-spacing:.06em;font-weight:400;margin-top:2px}
+.gl-note{font-size:.79rem;color:var(--dim);line-height:1.85}
+.term-notes{display:grid;gap:9px}
+.term-item{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--line);padding:13px 16px;background:rgba(17,22,27,.45)}
+.term-item b{flex:0 0 26px;font-family:var(--sans);font-size:.68rem;color:var(--jade);border:1px solid rgba(95,133,115,.45);padding:3px 0;text-align:center;letter-spacing:.05em}
+.term-notes.pending .term-item{border-color:rgba(176,141,85,.28);background:rgba(176,141,85,.05)}
+.term-notes.pending .term-item b{color:var(--gold-hi);border-color:rgba(176,141,85,.5)}
+.term-item p{font-size:.81rem;color:var(--dim);line-height:1.85}
+
 /* 来源 / 页脚 */
 .sec-source{padding-bottom:70px}
 .source-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:26px}
@@ -640,7 +703,12 @@ button{cursor:pointer;border:0;background:none;color:inherit}
   .topbar{height:60px;gap:10px;padding:0 16px}
   .brand-txt b{font-size:.82rem}
   .nav{order:3;position:fixed;top:60px;left:0;right:0;margin:0;padding:0 12px;background:rgba(9,12,15,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
-  .nav a{padding:10px 10px;font-size:.76rem}
+  .nav a{padding:10px 10px;font-size:.76rem;white-space:nowrap;flex-shrink:0}
+  .glossary{grid-template-columns:1fr}
+  .gl-row{grid-template-columns:1fr;gap:4px}
+  .gl-cn i{display:inline-block;margin-left:8px}
+  .gl-rows{padding:4px 14px 10px}
+  .term-item{padding:12px 13px;gap:10px}
   .progress-btn span{display:none}
   .progress-btn{padding:3px;margin-left:auto}
   .hero{min-height:720px;align-items:flex-start}
@@ -682,6 +750,16 @@ button{cursor:pointer;border:0;background:none;color:inherit}
   .toolbar-2{gap:8px;margin-top:-10px}
   .boss-meta{font-size:.68rem}
   .boss-inner{padding:0 14px 18px}
+  .vs-btn{min-width:0;flex:1 1 140px;padding:11px 13px}
+  .vs-btn b{font-size:.86rem}
+  .vs-btn i{font-size:.64rem}
+  .vs-note{margin-left:0;width:100%}
+  .codex-head{padding:12px;gap:9px;flex-wrap:nowrap}
+  .codex-name{flex:1;min-width:0;font-size:.9rem}
+  .codex-badge,.codex-head .boss-chev{flex-shrink:0}
+  .codex-ch,.codex-drop{display:none}
+  .codex-inner{padding:0 12px 16px}
+  .codex-facts{grid-template-columns:1fr}
   .whead{display:none}
   .wrow{grid-template-columns:26px 1fr 1fr;gap:8px;padding:12px 4px}
   .wrow .wf{grid-column:2 / -1;color:var(--gold);font-size:.74rem}

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="《影之刃零》全流程攻略武典：八境流程、全收集、61 场首领图鉴与分阶段配装、支线任务链、三结局、36 奖杯与不可逆避坑清单。">
+<meta name="description" content="《影之刃零》全流程攻略武典：八境流程、全收集、75 条 BOSS 战绩与 61 场遭遇分阶段配装、支线任务链、三结局、36 奖杯、不可逆避坑清单，附官方中文术语与中英口径对照。">
 <title>影之刃零 · 武典 | 全流程 · 全收集 · 全结局</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%237c241b'/%3E%3Ctext x='32' y='47' font-size='40' text-anchor='middle' fill='%23ece3d0'%3E%E5%88%83%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,6 +39,7 @@
     <a href="#jiejv">结局</a>
     <a href="#chengjiu">奖杯</a>
     <a href="#bikeng">避坑</a>
+    <a href="#shuyu">术语</a>
   </nav>
   <button class="progress-btn" id="progressBtn" aria-label="查看我的进度" title="查看我的进度">
     <svg viewBox="0 0 40 40" aria-hidden="true">
@@ -142,7 +143,7 @@
       <div class="hero-seal">武<br>典</div>
     </div>
     <div class="hero-en">PHANTOM BLADE ZERO　·　THE CODEX</div>
-    <p class="hero-sub">全流程 · 全收集 · 61 场首领图鉴 · 支线异闻 · 多结局 · 全成就</p>
+    <p class="hero-sub">全流程 · 全收集 · 75 条首领战绩 · 支线异闻 · 多结局 · 全成就</p>
     <p class="hero-quote" id="heroQuote"></p>
     <div class="hero-actions">
       <a class="btn-primary" href="#mulu">入　阵 <span>↓</span></a>
@@ -158,8 +159,8 @@
 <section class="sec sec-mulu" id="mulu">
   <div class="sec-head reveal">
     <div class="sec-index">卷 目</div>
-    <h2>九卷 · 一册通关</h2>
-    <p>从心法到终局，按卷索骥。每一卷都能勾选进度，行囊会自动记下你走到哪一步。</p>
+    <h2>十卷 · 一册通关</h2>
+    <p>从心法到终局，按卷索骥。每一卷都能勾选进度，行囊会自动记下你走到哪一步；末卷附官方中文术语与中英口径对照。</p>
   </div>
   <div class="mulu-grid" id="muluGrid"></div>
 </section>
@@ -173,7 +174,7 @@
   </div>
   <div class="mech-grid" id="mechGrid"></div>
 
-  <div class="subhead reveal"><span>三光诀</span><i>信号灯判定，是全局唯一的肌肉记忆</i></div>
+  <div class="subhead reveal"><span>三色信号光</span><i>信号灯判定，是全局唯一的肌肉记忆</i></div>
   <div class="signal-row" id="signalRow"></div>
 
   <div class="subhead reveal"><span>难度四境</span><i>难度随时可切，且最低难度也能拿全成就与白金</i></div>
@@ -195,30 +196,54 @@
 <section class="sec" id="qunxiong">
   <div class="sec-head reveal">
     <div class="sec-index">叁 · 群雄谱</div>
-    <h2>群雄谱 · 61 场首领遭遇</h2>
-    <p>按遭遇顺序编号，主线、可选、隐藏、小首领与复战全部收录。其中 18 场重点战逐阶段拆解，其余 43 场给出该阶段推荐配装与机制要点；每场都列「主武器 / 影之武装 / 饰品 / 药瓶」。点编号前的圆圈标记已讨伐，自动计入行囊。</p>
+    <h2>群雄谱 · 75 条战绩 / 61 场遭遇</h2>
+    <p>游戏内「BOSS 战绩」按<b>血条称号</b>计 75 条 —— 同一首领的第二形态、少主与双护卫、序章剧情战都各占一条；按玩家实际遭遇计 61 场。两种口径可随时切换，首领录每条都能跳回对应的分阶段配装。</p>
   </div>
-  <div class="toolbar reveal">
-    <div class="chips" id="bossRegionChips"></div>
-    <div class="search-wrap">
-      <span class="search-ico">⌕</span>
-      <input type="search" id="bossSearch" placeholder="搜编号 / 首领 / 英文名 / 掉落（按 / 聚焦）" autocomplete="off">
+  <div class="view-switch reveal" id="bossViewSwitch">
+    <button class="vs-btn" data-bv="encounter"><b>按遭遇 · 61 场</b><i>流程顺序 · 逐阶段配装</i></button>
+    <button class="vs-btn on" data-bv="codex"><b>按首领录 · 75 条</b><i>游戏内战绩 · 与小黑盒一致</i></button>
+    <span class="vs-note">口径差异见卷末「来源与存疑」</span>
+  </div>
+
+  <div id="bossEncounterView" hidden>
+    <div class="toolbar reveal">
+      <div class="chips" id="bossRegionChips"></div>
+      <div class="search-wrap">
+        <span class="search-ico">⌕</span>
+        <input type="search" id="bossSearch" placeholder="搜编号 / 首领 / 英文名 / 掉落（按 / 聚焦）" autocomplete="off">
+      </div>
     </div>
+    <div class="toolbar toolbar-2 reveal">
+      <span class="chip-label">类 别</span>
+      <div class="chips" id="bossCatChips"></div>
+      <div class="boss-count" id="bossCount"></div>
+    </div>
+    <div class="boss-list" id="bossList"></div>
   </div>
-  <div class="toolbar toolbar-2 reveal">
-    <span class="chip-label">类 别</span>
-    <div class="chips" id="bossCatChips"></div>
-    <div class="boss-count" id="bossCount"></div>
+
+  <div id="bossCodexView">
+    <div class="toolbar reveal">
+      <div class="chips" id="codexChapterChips"></div>
+      <div class="search-wrap">
+        <span class="search-ico">⌕</span>
+        <input type="search" id="codexSearch" placeholder="搜编号 / 称号 / 英文名 / 掉落 / 备注" autocomplete="off">
+      </div>
+    </div>
+    <div class="toolbar toolbar-2 reveal">
+      <span class="chip-label">类 别</span>
+      <div class="chips" id="codexCatChips"></div>
+      <div class="boss-count" id="codexCount"></div>
+    </div>
+    <div class="codex-list" id="codexList"></div>
   </div>
-  <div class="boss-list" id="bossList"></div>
 </section>
 
 <!-- ============ 肆 兵谱 ============ -->
 <section class="sec" id="bingpu">
   <div class="sec-head reveal">
     <div class="sec-index">肆 · 兵谱</div>
-    <h2>25 基础主武器 · 26 影之武装</h2>
-    <p>算上铸魂形态，图鉴总数 56 件（30 主武器 + 26 影之武装）；部分资料按 24 件影之武装统计。战斗可带 2 把主武器 + 2 件影之武装，切换主武器瞬间回满杀气；升级材料 10 级前全额退还，捡到什么试什么。</p>
+    <h2>25 主武器 · 25 影之武装</h2>
+    <p>中文全收集表列 25 把主武器 + 24 件影之武装；本页另收由三部件合成的「幻术琵琶」，共 50 件。算上铸魂后变成的新形态，媒体记图鉴总数 55–56 件。装备栏可带 2 主武器 + 2 影之武装 + 2 药瓶 + 6 饰品，切换主武器瞬间回满杀气；升级材料 10 级前全额退还。</p>
   </div>
   <div class="toolbar reveal">
     <div class="chips" id="weaponTabs"></div>
@@ -308,6 +333,20 @@
   <div class="tips-grid" id="tipsGrid"></div>
 </section>
 
+<!-- ============ 拾 术语与口径 ============ -->
+<section class="sec" id="shuyu">
+  <div class="sec-head reveal">
+    <div class="sec-index">拾 · 术语</div>
+    <h2>术语与口径 · 中英对照</h2>
+    <p>外网攻略的英文名与中文版正式用词并不一一对应。这一卷按官网、Bilibili 游戏 Wiki「战斗系统 / 铃铛」与游民《全收集列表》逐条校订，并把仍无法确认的直译名单独列出，不冒充官方译名。</p>
+  </div>
+  <div class="glossary" id="glossary"></div>
+  <div class="subhead reveal"><span>本次校订</span><i>改了什么，以及为什么</i></div>
+  <div class="term-notes fixed" id="termFixed"></div>
+  <div class="subhead reveal"><span>仍有存疑</span><i>英文直译，中文正式名待核</i></div>
+  <div class="term-notes pending" id="termPending"></div>
+</section>
+
 <!-- ============ 附 ============ -->
 <section class="sec sec-source" id="laiyuan">
   <div class="sec-head reveal">
@@ -333,6 +372,7 @@
 
 <script src="assets/data.js"></script>
 <script src="assets/bosses.js"></script>
+<script src="assets/codex.js"></script>
 <script src="assets/app.js"></script>
 </body>
 </html>
