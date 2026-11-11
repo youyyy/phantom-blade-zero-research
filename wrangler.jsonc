@@ -4,7 +4,6 @@
   "compatibility_date": "2026-10-01",
   // 仓库根目录即站点根目录，index.html 为入口
   "assets": {
-    "directory": "./",
-    "binding": "ASSETS"
+    "directory": "./"
   }
 }
